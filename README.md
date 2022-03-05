@@ -89,7 +89,18 @@ addrmap tiny {
 
 # Scenario three - ICDs as the single source of truth, centralized versions/dependencies tracking.
 
-1. Pull the document [----], and add the previously created document as a refernece (add a paragraph). Go to the dashboard, find the previously created document and copy the asciidoctor macro. Add the Macro [] to the document in section YYY, so there it will be generated the references list.
+1. Open the previously created document (
+
+2. Pull the document from [this repository](http://aaaa), and add the previously created document as a refernece (add a paragraph). To do so, go to the dashboard, find the previously created document and copy the asciidoctor macro. 
+
+![copying-docref-macro.gif](copying-docref-macro.gif)
+
+2.Add a new version tag, push it. Check the status of both documents (both should be PUBLISHED)
+
+3. 
+
+
+Add the Macro [] to the document in section YYY, so there it will be generated the references list.
 
 
 
