@@ -52,18 +52,45 @@ Now add changes, commit them, and tag the current version. Check in the dashboar
 
 The concept of 'quality gate' refers to the acceptance criteria a project must met before proceding to the following phase. In software, automatically verifiable criteria is integrated in the CI/CD environment, making sure that a version that doesn't fullfill one or more of them doesn't make it to the next stage. In the context of docs-as-code for ICDs management two main criteria were defined: prose quality and clarity, and completeness of technical information. In this proof of concept, two features are 'enforced' as quality gates: undefined acronyms (they must be explicitly linked to a centralized glossary) and, consistency and completeness of SystemRDL models embedded in it.
 
+1. Add a SystemRDL model. The following one, represents a registersmap for a device called 'turboencarbulator'. However, it has an issue, the addresses overlap:
 
 
+```
+[systemrdl, name="turboencarbulator"]
+-----
+addrmap tiny {
+    reg {
+        field {
+ 	    name="reg_aa";
+            sw=rw;
+            hw=r;
+        } f1[8] = 123;
+
+        field {
+            sw=r;
+            hw=w;
+        } f2[16];
+    }r1;
+};
+-----
+```
+
+2. Add a statement, that uses an acronym. Test the document locally, or commit/add a new version tag. Check the details on the dashboard. Look for details on the failed document version:
+
+- Error - inconsistnecy in the systemrdl document
+- Failed Quality gates: optional SystemRDL element, that was set as  mandatory in this context. Acronym unresolved.
+
+3. Fix the inconsistencies by:
+    - (1) adding [] to the SystemRDL specification, an (2) 
+    - Go to the dashboard, select Glossaries, and choose the acronym. Copy the macro.
+    - Add the macro to the document.
+4.  Commit, set the tag again and push. Look at the generated elements, namely: a human-readable representation of the registry, headers.
 
 
-- missing key elements in hardware specifications.
-- undefined acronyms
-- 
+# Scenario three - ICDs as the single source of truth, centralized versions/dependencies tracking.
 
-given the its 'computability', some of these criteria ca
-In the context of an automated CI/CD pipeline, some of these quality gates can be automatically verified,. In the case of documentation,  
+1. Pull the document [----], and add the previously created document as a refernece (add a paragraph). Go to the dashboard, find the previously created document and copy the asciidoctor macro. Add the Macro [] to the document in section YYY, so there it will be generated the references list.
 
-A quality-gate is an acceptance criteria
 
 
 
