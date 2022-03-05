@@ -89,26 +89,51 @@ addrmap tiny {
 
 # Scenario three - ICDs as the single source of truth, centralized versions/dependencies tracking.
 
-1. Open the previously created document (
+Working with outdated versions of a document (as some of the documents they are based on are updated), or working with artifacts derived from outdated specifications is a common issue (changes are not announced but discovered). This scenario illustrates how, having the ICDs as a the single source of truth (by making them machine-readable), and keeping track of dependencies between documents, would enable features to assist in the prevention of these outdatedness-related issues. The platform/tools are only for illustrative purposes  (C++, CMake), and the example is a minimalist for the sake of simplicity of the exercise.
 
-2. Pull the document from [this repository](http://aaaa), and add the previously created document as a refernece (add a paragraph). To do so, go to the dashboard, find the previously created document and copy the asciidoctor macro. 
+Here you will: (1) create a  codebase based that makes use on the information given by the document created in the previous scenario, and (2) add a new document that makes refernence to this document.
+
+
+1. Clone the dummy C++ application from [this repository](http://asdasd).
+2. Open the document previously published (on its deployment site). Go to the section where the register map was defined. Copy the header URL
+3. Pull the header inside the project. Add it in the CMake file.
+```
+wget [url]
+``` 
+3. In the document, copy the URL of the header's checksum, add it in your CMake file as follows. If you don't have CMake installed, do this in this containerized environment:
+
+```C
+cmake_minimum_required(VERSION 3.15)
+
+project(hello_world)
+
+file(DOWNLOAD http://localhost:8000/hashcode ${CMAKE_CURRENT_BINARY_DIR}/checksum)
+file(STRINGS ${CMAKE_CURRENT_BINARY_DIR}/checksum updated_checksum)
+file(SHA256 ./json.hpp current_bytecode)
+
+if (NOT ${updated_checksum} STREQUAL ${current_bytecode})
+        message("Outdated library")
+else()
+        message("OK")
+endif()
+
+message("[${current_bytecode}]")
+message("[${updated_checksum}]")
+
+add_executable(app main.cpp)
+
+```
+
+4. Suppose you are creating a new ICD that depends on the previous one. Pull the document from [this repository](http://aaaa), and add the previously created document as a refernece (add a paragraph). To do so, go to the dashboard, find the previously created document and copy the asciidoctor macro. 
 
 ![copying-docref-macro.gif](copying-docref-macro.gif)
 
 2.Add a new version tag, push it. Check the status of both documents (both should be PUBLISHED)
 
-3. 
+3.Now, let's assume a change is made to the original document (the one referenced by the new document, and whose content was used the codebase). Let's modify the SystemRDL specification of the 'turboencarbulator' so that _the register X now is 4 bytes insted of 2xxxxx_.
 
-
-Add the Macro [] to the document in section YYY, so there it will be generated the references list.
-
+4.Commit, add a new tag version. Check in the dashboard that this new version is the current one. Check how the status of the document changes (these status changes could be notified by other means to the people involved on its writing process). Now, from a developer perspective: run the CMake file again. 
 
 
 
 
-NOT PUBLISHED - FAILED REVIEW SUMBISSION
-NOT PUBLISHED - NEW STAGING VERSION
-PUBLISHED
-PUBLISHED - FAILED REVIEW SUBMISSION
-PUBLISHED - FAILED VERSION SUBMISSION
-PUBLISHED - DEPENDENCY UPDATED
