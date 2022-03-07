@@ -1,58 +1,56 @@
-# Single case experiment
+# Document-as-code in the context of Interface-Control documents
 
+A number of empirical studies suggest that serious integration and operational problems in large-scale systems/systems-of-systems are often linked to Interface-Control documents (ICDs) management. These empirical studies suggested that interfaces are in many cases incomplete or unclearly defined, especially between hardware and software subsystems, which, together with the domain knowledge gap between the owners and the users of the interface, often lead to misunderstandings or potentially false assumptions. Furthermore, the development of the software artifacts derived from them (e.g., simulations, tests) are error-prone not only because the ICDs, by being human-readable-only require manual transcription. Furthermore, this this creates a problem of redundant specifications scattered across multiple artifacts -the human-readable document and the artifacts derived from them-, and hence the risk of having them out-of-sync with each other. With this motivation, an action research study is being carried on in the context of LOFAR, with the goal of identifying and evaulating alternative ICDs management approaches that could improve the aforementioned issues.
 
-In a number of studies we have identified a number of issues on the interplay betweem the disciplines involved in large-scale issues. A recurrent issue across several studies was: A, B, ... and M. This includes an exploratory case study on LOFAR/LOFAR2.0.
+In the particular case of LOFAR, the ICDs, and their life-cycle related information (changelogs, discussions about future changes, etc) have been managed in word-processing documents under version control, having recently switched to a corporate-based wikis for this purpose. During the diagnosing phase of the action research study, the following details on the aforementioned issues were identified:
 
-In an action research initiated in 2021, in the diagnosing phase we identifie more specific issues related to the general ones previousle mentioned.
+## Interface documentation-related issues
 
-This project aims define and validate, by means of an action research process, an alternative documentation approach for ICDs that improves (1) the space for misinterpretation of ICDs when used in a cross-disciplinary setting (2) the communication overhead due to incomplete information in it, and (3) the amount of redundant information scattered on all the artifacts (additional documents and software components) derived from the ICDs.
+- Language consistency/uniformity: an ICD often contains terminology that was clear for the people involved in its original version, but years later it could be interpreted differently. This problem is exacerbated by the fact that hardware and software engineers use similar terminology with different interpretations from each one’s domain.
+- Establishing fundamentals: some trivial, but critical elements are often omitted on the ICDs. This could lead to risky assumptions, or to error-prone informal information exchange to fill the details gap.
+- Badly written definitions due to the lack of English proficiency of the writers, or misinterpretation of existing definitions due to the same language-proficiency issues.
+- Time-behavioral and state-related aspects of the interfaces are often not included in the ICDs. 
 
+## Interface documentation management-related issues
 
-For this first cycle of the actio research, in the action-taking we found that docs-as-code philosply was seemenlgy applicable to many of the identified issues. This is based in three principles: .....
-On top of this phyolosphy, the following features are being proposed to address these issues:
+- Changes on the ICDs are not announced but rather discovered by people working with them.
+- There is a need for the right balance of documentation maintenance efforts and the actual engineering/development ones. Currently, information is duplicated across ICDs, the implemented artifacts, and other tools created to support the development process.
 
-- A markdown-based language  over WYSIWYG (word, wikis, etc). Allows to reuse proven tools that allows for collaboration (writing and reviewing) and automation (document building, validation) and ensures consistency and traceability (e.g., version control).
+In the action planning phase of the first cycle of the study, a documentation management approach inspired on the document-as-code philosophy, i.e., managing documentation the same way software source code is managed in modern settings, has been proposed with the following elements:
 
-- Quality gates: given the aforementioned automation features, in a docs-as-code documentation pipeline, quality criteria for a document can be defined for a document to be published. This encourages uniformity.
+1. In order remove dependencies between technical documentation (in this case, ICDs) and propietary authoring software, making said documents compatible with modern software-centered versioning control systems, a machine-readable, text-based markup language will be used.
 
-- Documentation as a single source of truth: the machine-readable nature of the  markup-based languages enable writers to embed formal specifications in the documentation (e.g., for hardware) so that from it can be automatically generated  not only the document, but other related artifacts that are prone to error when transcribed from it.
+2. A Continuous-Integration/Continuous-Delivery pipeline, commonly use in a software setting to automate the building and quality assessment of the documents. With this, the organization can define policies for documentation quality enforcement before it us published.
 
-- A documentation-centric dashboard, with an under-the-hood platform that keeps track of the status of the documents, including their dependencies.
+3. The integration of one or more formalisms for the specification of technical elements of the ICDs (e.g., hardware descriptions) within the document. With this, and an number of automatic transformations applied to them for content or software artifacts generation, the ICDs are expected to become the single-source-of truth during subsysems-interfaces development or maintinance.
 
+4. A centralized management of the documents created under this docs-as-code environment, so the documents and the dependencies between their different versions (e.g., when an ICD refers to a particular version of the previous one) can be tracked. With this, the people whose work depend on these documents can be aware (or notified about) when an update is taking place.
 
+In the following exercise, you will perform a test-drive, in a set of scenarios, of a working prototype of the documentation pipeline above described. 
 
-
-## Notes
-
-- The set of tools are fully functional, but on an early development stage.
-- The default quality gates:
 
 # Scenario one - Document versioning and review process
 
-In this scenario you will assume the role of a technical writer, who is going to add the final changues to a work-in-progres document, candidate to be published as the first version of an official ICD. When the changes on the git repository are commited and pushed into the remote repostitory in github, it will launch an CI/CD process that will build the document. If no version tag is assigned, the process will publish the generated document in an 'staging environment' for preview. Once the input has been provided (by informal means, or explicitly through pull requests), an official version can be published by adding a version tag.
+In this scenario, you will play the role of a technical writer, who is going to add the final changes to a work-in-progress ICD, candidate to be published as its first official version. In the proposed documentation management approach, the documents are stored in a Git repository with CI/CD settings that upon a document update, will build the document, and publishes it if it fullfills the expected quality characteristics. However, to add a human review to the process, by default the building process will publish a non-official version of the document on an 'staging' environment. Once the input has been provided (by informal means, or explicitly through pull requests), an official version can be published by adding a version tag.
 
+Steps:
 
-1. Clone this repositor in your workstation. Install an editor (AsciidoctorFX, ... etc) and edit the index.adoc. file. The file already contains a basic template of the document .
-2. Add changes, commit and push them to the repository.
-3. Open the [documentation dashboard](http://asdasd.com), authenticate with the credentials send to you by email. Once the documents has been generated, one of two statuses should be available shown: 
+1. Clone this repositor in your workstation, and edit the index.adoc file, an Asciidoc file that already contains a basic template of a (very small) ICD.
+2. Add content to the ICD, commit and push them into the repository.
+3. Open the [documentation dashboard](http://tobedepplyed.com), authenticate with the credentials sent to you by email. Once the documents have been generated, your document should be listed as either ___NOT PUBLISHED - FAILED REVIEW SUBMISSION___ or ___NOT PUBLISHED - NEW STAGING VERSION___.
 
-NOT PUBLISHED - FAILED REVIEW SUMBISSION
-NOT PUBLISHED - NEW STAGING VERSION
+In the first case, there was an error. Check the details on the dashboard (add gif here). In the latter, check and open the URL of the staging version (for sharing with the involved people).
 
-If the first case, there was an error. Check the details on the dashboard (PEEK animation of)
-In the latter, check and open the URL of the staging version  (for sharing with the involved people).
+Now add changes, commit them, and tag the current version. Check in the dashboard that the status is PUBLISHED. Check the link where the official version should be created, and that your tag is included as a description.
 
-Now add changes, commit them, and tag the current version. Check in the dashboard that the status is PUBLISHED. Check the link where the offcial version should be created, and that your tag is included as a description.
-
-``bash
-    $ git tag -a -m ....
-``
 
 # Scenario two - Quality gates
 
-The concept of 'quality gate' refers to the acceptance criteria a project must met before proceding to the following phase. In software, automatically verifiable criteria is integrated in the CI/CD environment, making sure that a version that doesn't fullfill one or more of them doesn't make it to the next stage. In the context of docs-as-code for ICDs management two main criteria were defined: prose quality and clarity, and completeness of technical information. In this proof of concept, two features are 'enforced' as quality gates: undefined acronyms (they must be explicitly linked to a centralized glossary) and, consistency and completeness of SystemRDL models embedded in it.
+The concept of 'quality gate' refers to the acceptance criteria a project must meet before proceeding to the follow-up delivery phases. In software, automatically verifiable criteria are integrated into the CI/CD environment with this purpose. In the context of docs-as-code for the proposed ICDs management approach, two main criteria can be enforced: prose quality/clarity, and completeness of technical information. In this proof of concept, two 'quality gates' are includes for illustrative purposes: (1) acronmyms must be explicitly defined, a referred to an entry in a centralized glossary, and (2) the models used in the document to describe hardware elements must explicitly define the endianness of the registers. For the latter, the prototype supports hardware specifications using a SystemRDL specification (it is not necessary to have to previous knowledge about it syntax, as the exercise will guide on how to modify it). 
 
-1. Add a SystemRDL model. The following one, represents a registersmap for a device called 'turboencarbulator'. However, it has an issue, the addresses overlap:
+Steps:
+
+1. Add a SystemRDL model. The following one represents a registers map for a device called 'turboencarbulator'. However, it has an issue, as the addresses overlap, and the endianness is not defined:
 
 
 ```
@@ -75,23 +73,23 @@ addrmap tiny {
 -----
 ```
 
-2. Add a statement, that uses an acronym. Test the document locally, or commit/add a new version tag. Check the details on the dashboard. Look for details on the failed document version:
+2. Add a sentence on the ICD, that uses an acronym. Test the document locally, or commit/add a new version tag. Check the details on the dashboard. Look for details on the failed document version:
 
-- Error - inconsistnecy in the systemrdl document
-- Failed Quality gates: optional SystemRDL element, that was set as  mandatory in this context. Acronym unresolved.
+- Error - inconsistency in the systemrdl document
+- Failed Quality gates: optional SystemRDL element, that was set as mandatory in this context. Acronym unresolved.
 
 3. Fix the inconsistencies by:
-    - (1) adding [] to the SystemRDL specification, an (2) 
-    - Go to the dashboard, select Glossaries, and choose the acronym. Copy the macro.
-    - Add the macro to the document.
-4.  Commit, set the tag again and push. Look at the generated elements, namely: a human-readable representation of the registry, headers.
+- (1) adding [] to the SystemRDL specification, an (2)
+- Go to the dashboard, select Glossaries, and choose the acronym. Copy the macro.
+- Add the macro to the document.
+4. Commit, set the tag again, and push. Look at the generated elements, namely: a human-readable representation of the registry, headers.
 
 
 # Scenario three - ICDs as the single source of truth, centralized versions/dependencies tracking.
 
-Working with outdated versions of a document (as some of the documents they are based on are updated), or working with artifacts derived from outdated specifications is a common issue (changes are not announced but discovered). This scenario illustrates how, having the ICDs as a the single source of truth (by making them machine-readable), and keeping track of dependencies between documents, would enable features to assist in the prevention of these outdatedness-related issues. The platform/tools are only for illustrative purposes  (C++, CMake), and the example is a minimalist for the sake of simplicity of the exercise.
+Working with outdated versions of a document (as some of the documents they are based on are updated), or working with artifacts derived from outdated specifications is a common issue (changes are not announced but discovered). This scenario illustrates how, having the ICDs as the single source of truth (by making them machine-readable), and keeping track of dependencies between documents, would enable features to assist in the prevention of these outdatedness-related issues. The platform/tools are only for illustrative purposes (C++, CMake), and the example is minimalist for the sake of simplicity of the exercise.
 
-Here you will: (1) create a  codebase based that makes use on the information given by the document created in the previous scenario, and (2) add a new document that makes refernence to this document.
+Here you will: (1) create a codebase based that makes use of the information given by the document created in the previous scenario, and (2) add a new document that makes reference to this document.
 
 
 1. Clone the dummy C++ application from [this repository](http://asdasd).
@@ -124,15 +122,15 @@ add_executable(app main.cpp)
 
 ```
 
-4. Suppose you are creating a new ICD that depends on the previous one. Pull the document from [this repository](http://aaaa), and add the previously created document as a refernece (add a paragraph). To do so, go to the dashboard, find the previously created document and copy the asciidoctor macro. 
+4. Suppose you are creating a new ICD that depends on the previous one. Pull the document from [this repository](http://aaaa), and add the previously created document as a reference (add a paragraph). To do so, go to the dashboard, find the previously created document and copy the asciidoctor macro.
 
 ![copying-docref-macro.gif](copying-docref-macro.gif)
 
-2.Add a new version tag, push it. Check the status of both documents (both should be PUBLISHED)
+2. Add a new version tag, push it. Check the status of both documents (both should be PUBLISHED)
 
-3.Now, let's assume a change is made to the original document (the one referenced by the new document, and whose content was used the codebase). Let's modify the SystemRDL specification of the 'turboencarbulator' so that _the register X now is 4 bytes insted of 2xxxxx_.
+3. Now, let's assume a change is made to the original document (the one referenced by the new document, and whose content was used in the codebase). Let's modify the SystemRDL specification of the 'turboencarbulator' so that _the register X now is 4 bytes instead of 2xxxxx_.
 
-4.Commit, add a new tag version. Check in the dashboard that this new version is the current one. Check how the status of the document changes (these status changes could be notified by other means to the people involved on its writing process). Now, from a developer perspective: run the CMake file again. 
+4. Commit, add a new tag version. Check in the dashboard that this new version is the current one. Check how the status of the document changes (these status changes could be notified by other means to the people involved in its writing process). Now, from a developer perspective: run the CMake file again.
 
 
 
