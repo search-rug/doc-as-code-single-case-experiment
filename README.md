@@ -78,27 +78,30 @@ addrmap tiny {
 - Error: internal inconsistencies in the SystemRDL model.
 - Failed Quality gates: an optional SystemRDL element (in this case endianness), that was set as mandatory in this context, was miseed; an acronym was included but not described in the document.
 
-3. Fix the inconsistencies by:
-    - Adding the following elements to the SystemRDL specification:
+3. Fix the inconsistencies:
+    - Add the following elements to the SystemRDL specification:
     ```
      To be defined
     ```
     
 
-- Go to the dashboard, select Glossaries, and choose the acronym. Copy the macro.
-- Add the macro to the document.
-4. Commit, set the tag again, and push. Look at the generated elements, namely: a human-readable representation of the registry, headers.
+    - Add the macro glossary:default[] in the section where you want the glossary to be populated. 
+    - Go to the dashboard, select Glossaries, and look for the acronym. There you can see how you can refer to the acronym within the document in a way its definition is automatically included in the document's glossary.
+
+4. Commit, set a new version tag, and push. Look at the generated elements, namely: a human-readable representation of the registry, and the C headers.
 
 
 # Scenario three - ICDs as the single source of truth, centralized versions/dependencies tracking.
 
-Working with outdated versions of a document (as some of the documents they are based on are updated), or working with artifacts derived from outdated specifications is a common issue (changes are not announced but discovered). This scenario illustrates how, having the ICDs as the single source of truth (by making them machine-readable), and keeping track of dependencies between documents, would enable features to assist in the prevention of these outdatedness-related issues. The platform/tools are only for illustrative purposes (C++, CMake), and the example is minimalist for the sake of simplicity of the exercise.
-Here you will: (1) create a codebase based that makes use of the information given by the document created in the previous scenario, and (2) add a new document that makes reference to this document.
+This scenario illustrates how, having the ICDs as the single source of truth (by making them machine-readable), and keeping track of dependencies between documents, would enable features to assist in the prevention of these outdatedness-related issues. The chosen platforms/tools are only for illustrative purposes (C++, CMake), and the example is minimalist for the sake of simplicity of the exercise. Here you will (1) create a simple codebase that makes use of the information given by the document created in the previous scenario, and (2) add a new document that makes reference to this document.
 
 
-1. Clone the dummy C++ application from [this repository](http://asdasd).
-2. Open the document previously published (on its deployment site). Go to the section where the register map was defined. Copy the header URL
-3. Pull the header inside the project. Add it in the CMake file.
+1. Clone the C++ codebase from [this repository](http://to_be_defined).
+2. Open the document previously published (on its deployment site). Go to the section where the register map was defined. Copy the header URL.
+
+![](Copy-header-URL)
+
+3. Pull the header inside the project, and add it in the CMake file.
 ```
 wget [url]
 ``` 
@@ -107,35 +110,32 @@ wget [url]
 ```C
 cmake_minimum_required(VERSION 3.15)
 
-project(hello_world)
+project(header_check_example)
 
-file(DOWNLOAD http://localhost:8000/hashcode ${CMAKE_CURRENT_BINARY_DIR}/checksum)
+file(DOWNLOAD CHECKSUM_URL ${CMAKE_CURRENT_BINARY_DIR}/checksum)
 file(STRINGS ${CMAKE_CURRENT_BINARY_DIR}/checksum updated_checksum)
-file(SHA256 ./json.hpp current_bytecode)
+file(SHA256 ./turboencarbulator.hpp current_bytecode)
 
 if (NOT ${updated_checksum} STREQUAL ${current_bytecode})
-        message("Outdated library")
+        message("Warning: the header of turboencarbulator.hpp might not be up-to-date with respect to the ICD it was based on")
 else()
-        message("OK")
+        message("Checksum check... OK")
 endif()
-
-message("[${current_bytecode}]")
-message("[${updated_checksum}]")
 
 add_executable(app main.cpp)
 
 ```
 
-4. Suppose you are creating a new ICD that depends on the previous one. Pull the document from [this repository](http://aaaa), and add the previously created document as a reference (add a paragraph). To do so, go to the dashboard, find the previously created document and copy the asciidoctor macro.
+4. Edit the [ICD A2](http://to_be_defined), and add a reference to the previously created one. To do so, go to the dashboard, find the previously created document and copy the AsciiDoc macro used for referencing other documents:
 
 ![copying-docref-macro.gif](copying-docref-macro.gif)
 
-2. Add a new version tag, push it. Check the status of both documents (both should be PUBLISHED)
+2. Commit, add a new version tag, and push it (including the tag). Check the status of both documents on the Dashboard (both should be PUBLISHED)
 
-3. Now, let's assume a change is made to the original document (the one referenced by the new document, and whose content was used in the codebase). Let's modify the SystemRDL specification of the 'turboencarbulator' so that _the register X now is 4 bytes instead of 2xxxxx_.
+3. Now, let's assume a change is made to the original document (the one referenced by the new document, and whose content was used in the codebase). Let's modify the SystemRDL specification of the 'turboencarbulator' so that reg_aa is now 'read only' for software.
 
-4. Commit, add a new tag version. Check in the dashboard that this new version is the current one. Check how the status of the document changes (these status changes could be notified by other means to the people involved in its writing process). Now, from a developer perspective: run the CMake file again.
-
+4. Commit, add a new tag version and push the changes. Check the new status of the ICD A2, and the information available for a person to analyze how to deal with the scenario of working with a document that might require being revisited.
+5. Returning to the developer perspective: go to the development environment and, and rebuild the process.
 
 
 
