@@ -135,7 +135,7 @@ add_executable(app main.cpp)
 3. Now, let's assume a change is made to the original document (the one referenced by the new document, and whose content was used in the codebase). Let's modify the SystemRDL specification of the 'turboencarbulator' so that reg_aa is now 'read only' for software.
 
 4. Commit, add a new tag version and push the changes. Check the new status of the ICD A2, and the information available for a person to analyze how to deal with the scenario of working with a document that might require being revisited.
-5. Returning to the developer perspective: go to the development environment and, and rebuild the process.
+5. Returning to the developer perspective: go to the development environment and, re-run the build process and see difference on the output after the updates on the ICD.
 
 
 
