@@ -99,7 +99,7 @@ This scenario illustrates how, having the ICDs as the single source of truth (by
 1. Clone the C++ codebase from [this repository](http://to_be_defined).
 2. Open the document previously published (on its deployment site). Go to the section where the register map was defined. Copy the header URL.
 
-![](Copy-header-URL)
+![](copy-header-url.gif)
 
 3. Pull the header inside the project, and add it in the CMake file.
 ```
