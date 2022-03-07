@@ -73,13 +73,18 @@ addrmap tiny {
 -----
 ```
 
-2. Add a sentence on the ICD, that uses an acronym. Test the document locally, or commit/add a new version tag. Check the details on the dashboard. Look for details on the failed document version:
+2. Add a sentence on the ICD, that uses the acronym KFCA. Test the document locally, or commit/add a new version tag. Check the way the popiline has two types of documentation publication failures: consistency errors, and failed 'quality gates': 
 
-- Error - inconsistency in the systemrdl document
-- Failed Quality gates: optional SystemRDL element, that was set as mandatory in this context. Acronym unresolved.
+- Error: internal inconsistencies in the SystemRDL model.
+- Failed Quality gates: an optional SystemRDL element (in this case endianness), that was set as mandatory in this context, was miseed; an acronym was included but not described in the document.
 
 3. Fix the inconsistencies by:
-- (1) adding [] to the SystemRDL specification, an (2)
+    - Adding the following elements to the SystemRDL specification:
+    ```
+     To be defined
+    ```
+    
+
 - Go to the dashboard, select Glossaries, and choose the acronym. Copy the macro.
 - Add the macro to the document.
 4. Commit, set the tag again, and push. Look at the generated elements, namely: a human-readable representation of the registry, headers.
@@ -88,7 +93,6 @@ addrmap tiny {
 # Scenario three - ICDs as the single source of truth, centralized versions/dependencies tracking.
 
 Working with outdated versions of a document (as some of the documents they are based on are updated), or working with artifacts derived from outdated specifications is a common issue (changes are not announced but discovered). This scenario illustrates how, having the ICDs as the single source of truth (by making them machine-readable), and keeping track of dependencies between documents, would enable features to assist in the prevention of these outdatedness-related issues. The platform/tools are only for illustrative purposes (C++, CMake), and the example is minimalist for the sake of simplicity of the exercise.
-
 Here you will: (1) create a codebase based that makes use of the information given by the document created in the previous scenario, and (2) add a new document that makes reference to this document.
 
 
