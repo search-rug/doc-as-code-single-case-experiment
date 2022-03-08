@@ -35,9 +35,43 @@ In the action planning phase of the first cycle of the study, a documentation ma
 In the following exercise, you will perform a test-drive, in a set of scenarios, of a working prototype of the documentation pipeline described above. 
 
 
-### Scenario one - Document versioning and review process
+### Scenario one - Document versioning and basic ICDs publication/tracking
 
-In this scenario, you will play the role of a technical writer, who is going to add the final changes to a work-in-progress ICD that is a candidate to be published as its first official version. In the proposed documentation management approach, the documents are stored in a Git repository with CI/CD settings that upon a document update, will build the document, and publish it if it fullfills the expected quality characteristics. However, to add a human review to the process, by default the building process will publish a non-official version of the document on a 'staging' environment. Once the input has been provided (by informal means, or explicitly through pull requests), an official version can be published by adding an appropriate version tag.
+In the proposed documentation management approach, each ICD is written in a markup language and maintained on its own Git repository. In this exercise, you will test-drive two artifacts: (1) a docker container that build and test (against the define quality gates) these documents within a CI/CD pipeline, and (2) a document-centered platform that keep track of the status of the overall documentation.
+
+Steps:
+
+1. Create a new public, empty repository on Gitlab (https://www.gitlab.com), as the tools have not been tested on private Gitlab configurations. Choose a name that you think would be meaninful for a technical document.
+
+2. Use the [following document](http://) as a template for your first (and rather small) ICD. Make sure you the file is in the root of the repository, and that it keeps the 'index.adoc' name. Add this document to your repository. Add some content or diagramas.
+
+3. To integrate your repository into the centralized documentation pipeline, first enable the "Protected Tags" to the ones with the pattern v* (allowing developers and maintainers to create them). Then set the variable BACKEND_CREDENTIALS (with the values sent to you by email), with the flags 'Protect variable' and 'Mask variable' enabled.
+
+![](protected_tag.png)
+
+![](add_variable.gif)
+
+4. Create a .gitlab-ci.yml (with the '.' at the beginning) at the root of your local repository if it doesnt exist yet. Set the following YAML code as its (only) content:
+
+```yml
+include:
+  - remote: https://gitlab.com/hcadavid/dac-pipeline-configuration/-/raw/main/cicdconfig.yml
+```
+
+5. Once you commit and push the above changes, a CI/CD job should be launched. The compiled document should be now accessible in gitlab pages at <your_user_name>.gitlab.io/stage. This 'staging' version of the document, which won't be considered as an official one, would be useful for reviews before posting an actual version of the document.
+
+6. Now, add more content to what will be the first official version of the document. In order publish the document as such, commit the changes and create an annotated tag. Given that the messages on the annotated tags would be used for automatically generate the __Document history__ section of the document, write one that would work for this purpose, e.g.:
+
+```
+$ git tag -a v0.1 -m "Draft version ... "
+```
+
+7. Push the tag to the gitlab repository. This time, as you are pushing a concrete version of the document, the building and validation process will exchange information with the document management system to start keep tracking of this and future versions. Once the document has been built and published, its information should be now available on the [documentation management dashboard](https://documentation-dashboard.herokuapp.com/). Use the same user/name credentials provided for log in. You can click on the row corresponding to your documents and see the details available at the moment. From there, you can for this or any other document for instance, open the last published version, check the repository location, etc.
+
+![](doclist-dashboard.png)
+
+
+In this scenario, you will play the role of a technical writer, who is going to add the final changes to an ICD draft, candidate to be published as its first official version. In the proposed documentation management approach, the documents are stored in a Git repository with CI/CD settings that upon a document update, will build the document, and publish it if it fullfills the expected quality characteristics. However, to add a human review to the process, by default the building process will publish a non-official version of the document on a 'staging' environment. Once the input has been provided (by informal means, or explicitly through pull requests), an official version can be published by adding an appropriate version tag.
 
 Steps:
 
