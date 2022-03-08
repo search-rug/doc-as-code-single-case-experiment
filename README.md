@@ -37,7 +37,7 @@ In the following exercise, you will perform a test-drive, in a set of scenarios,
 
 ### Scenario one - Document versioning and basic ICDs publication/tracking
 
-In the proposed documentation management approach, each ICD is written in a markup language and maintained on its own Git repository. In this exercise, you will test-drive two artifacts: (1) a docker container that build and test (against the define quality gates) these documents within a CI/CD pipeline, and (2) a document-centered platform that keep track of the status of the overall documentation.
+In the proposed documentation management approach, each ICD is written in a markup language and maintained on its own Git repository. In this exercise, you will test-drive two artifacts: (1) a docker container that build and test (against the predefined 'quality gates') these documents within a CI/CD pipeline, and (2) a document-centered platform that keep track of the status of the overall documentation.
 
 Steps:
 
@@ -66,27 +66,16 @@ include:
 $ git tag -a v0.1 -m "Draft version ... "
 ```
 
-7. Push the tag to the gitlab repository. This time, as you are pushing a concrete version of the document, the building and validation process will exchange information with the document management system to start keep tracking of this and future versions. Once the document has been built and published, its information should be now available on the [documentation management dashboard](https://documentation-dashboard.herokuapp.com/). Use the same user/name credentials provided for log in. You can click on the row corresponding to your documents and see the details available at the moment. From there, you can for this or any other document for instance, open the last published version, check the repository location, etc.
+7. Push the tag to the gitlab repository. This time, as you are pushing a concrete version of the document, the building and validation process will exchange information with the document management system to start keep tracking of this and future versions. Once the document has been built and published, its information should be now available on the [documentation management dashboard](https://documentation-dashboard.herokuapp.com/). Use the same user/name credentials sent to your email for authentication.
 
-![](doclist-dashboard.png)
+8. Create a second repository for a different ICD (you will make references between them in one of the following scenarios) and publish a version of it. You can just duplicate the previous one and change part of the content, just do not forget to add the BACKEND_CREDENTIALS variable and enable the protected tags.
 
-
-In this scenario, you will play the role of a technical writer, who is going to add the final changes to an ICD draft, candidate to be published as its first official version. In the proposed documentation management approach, the documents are stored in a Git repository with CI/CD settings that upon a document update, will build the document, and publish it if it fullfills the expected quality characteristics. However, to add a human review to the process, by default the building process will publish a non-official version of the document on a 'staging' environment. Once the input has been provided (by informal means, or explicitly through pull requests), an official version can be published by adding an appropriate version tag.
-
-Steps:
-
-1. Clone this repository in your workstation and open the index.adoc file, an Asciidoc file that already contains a basic template of a (very small) ICD, for editing.
-2. Add some content to the ICD, commit and push it into the repository.
-3. Open the [documentation dashboard](https://documentation-dashboard.herokuapp.com/), authenticate with the credentials sent to you by email. Once the documents have been generated, your document should be listed as either ___NOT PUBLISHED - FAILED REVIEW SUBMISSION___ or ___NOT PUBLISHED - NEW STAGING VERSION___.
-
-In the first case, there was an error. Check the details on the dashboard (add gif here). In the latter, check and open the URL of the staging version (for sharing with the involved people).
-
-Now add some changes, commit them, and tag the current version. Check in the dashboard that the status is PUBLISHED. Check the link where the official version should be created, and that your tag is included as a description.
+8. If you are able to check the details of both documents, and their status is PUBLISHED, you are done with the basic publication scenario. Otherwise, please double check the previous steps or get in touch with the researchers for assistance). 
 
 
 ### Scenario two - Quality gates
 
-The concept of 'quality gate' refers to the acceptance criteria a project must meet before proceeding to the follow-up delivery phases. In software, automatically verifiable criteria are integrated into the CI/CD environment with this purpose. In the context of document-as-code for the proposed ICDs management approach, two main criteria can be enforced: prose quality/clarity, and completeness of technical information. In this proof of concept, two 'quality gates' are included for illustrative purposes: (1) acronmyms must be explicitly defined as a referred to an entry in a centralized glossary, and (2) the models used in the document to describe hardware elements must explicitly define the endianness of the registers. For the latter, the prototype supports hardware specifications using a SystemRDL specification (it is not necessary to have to previous knowledge about its syntax, as the exercise will guide you on how to modify it). 
+The concept of 'quality gate' refers to the acceptance criteria a project must meet before proceeding to the follow-up delivery phases. In software, automatically verifiable criteria are integrated into the CI/CD environment with this purpose. The proposed documentation approach would enforce two main criteria related to the issues dicussed at the beginning of the document: prose quality/clarity, and completeness of expected technical details provided. In this proof of concept, two 'quality gates' are included for illustrative purposes: (1) acronmyms must be explicitly defined by linking them to an entry in a centralized glossary, and (2) the models used in the document to describe hardware elements must explicitly define the endianness of the registers. For the latter, you will use a prelimiary version of an extension for describing hardware using SystemRDL language (it is not necessary to have to previous knowledge about its syntax, as the exercise will guide you on how to modify it). 
 
 Steps:
 
