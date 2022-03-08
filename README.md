@@ -4,12 +4,13 @@ A number of empirical studies suggest that serious integration and operational p
 
 With this motivation, an action research study is being carried on in the context of LOFAR, with the goal of identifying and evaulating alternative ICD management approaches that could improve the aforementioned issues.
 
-In the particular case of LOFAR, the ICDs, and their life-cycle related information (changelogs, discussions about future changes, etc.) have been managed in word-processing documents under version control, having recently switched to a corporate-based wikis for this purpose. During the diagnosing phase of the action research study, the following details on the aforementioned issues were identified:
+In the particular case of LOFAR, the ICDs have been managed in word-processing documents under version control, having recently switched to a corporate-based wikis for this purpose. Given this context, during the diagnosing phase of the action research study, the following details on the aforementioned issues were identified:
+
 
 ## Interface documentation-related issues
 
-- Language consistency/uniformity: an ICD often contains terminology that was clear for the people involved in its original version, but years later it could be interpreted differently. This problem is exacerbated by the fact that hardware and software engineers use similar terminology with different interpretations from each one’s domain.
-- Establishing fundamentals: some trivial, but critical elements are often omitted on the ICDs. This could lead to risky assumptions, or to error-prone informal information exchange to fill the details gap.
+- The ICDs often contains terminology that was clear for the people involved in its original version, but years later it could be interpreted differently. This problem is exacerbated by the fact that hardware and software engineers use similar terminology with different interpretations from each one’s domain.
+- Some trivial, but critical elements are often omitted on the ICDs. This could lead to risky assumptions, or to error-prone informal information exchange to fill the details gap.
 - Badly written definitions due to the lack of English proficiency of the writers, or misinterpretation of existing definitions due to the same language-proficiency issues.
 - Time-behavioral and state-related aspects of the interfaces are often not included in the ICDs. 
 
@@ -20,13 +21,14 @@ In the particular case of LOFAR, the ICDs, and their life-cycle related informat
 
 ## Study design
 
-In the action planning phase of the first cycle of the study, a documentation management approach inspired on the document-as-code philosophy, i.e., managing documentation the same way software source code is managed in modern settings, has been proposed with the following elements:
+In the action planning phase of the first cycle of the study, a documentation management approach inspired on the document-as-code philosophy, i.e., managing documentation the same way software source code is managed in modern settings, has been proposed. This first cycle is particularly aimed at exploring the first two of the aforementioned documentation-related issues, and the documentation-managament ones. The remaining ones ---language-proficiency related, and the lack of dynamic behavior details--- will be explored in the following cycle based on the findings of this evaulation exercise. Given the above, this documentation management approach includes the following elements:
 
-1. In order to remove dependencies between technical documentation (in this case, ICDs) and propietary authoring software, a machine-readable, text-based markup language is used, making said documents compatible with modern software-centered versioning control systems.
 
-2. A Continuous-Integration/Continuous-Delivery pipeline, commonly used in a software setting to automate the building and quality assessment of the documents is adopted. With this, the organization can define policies for documentation quality enforcement before an ICD is published.
+1. In order to make the technical documentation (in this case, ICDs) compatible with modern software-centered versioning control systems and automation platforms, a machine-readable, text-based markup language for the writing process.
 
-3. The integration of one or more formalisms for the specification of technical elements of the ICDs (e.g., hardware descriptions) within the document is allowed. With this, and a number of automatic transformations applied to them for content or software artifacts generation, the ICDs are expected to become the single-source-of truth during subsystem interface development or maintenance.
+2. A Continuous-Integration/Continuous-Delivery pipeline, commonly used in a software setting to automate the building and quality assessment of source code, is tailored to the context of technical documentation. With this, the organization can define policies for documentation quality enforcement before an ICD is published.
+
+3. The integration of one or more formalisms for the specification of technical elements wihtin the ICDs (e.g., hardware descriptions) is allowed. With this, and a number of automatic transformations applied to them for content or software artifacts generation, the ICDs are expected to become the single-source-of truth during subsystem interface development or maintenance.
 
 4. A centralized management of the documents created under this document-as-code environment is put into place, so the documents and the dependencies between their different versions (e.g., when an ICD refers to a particular version of the previous one) can be tracked. With this, the people whose work depend on these documents can be aware (or notified about) when an update is taking place.
 
@@ -41,7 +43,7 @@ Steps:
 
 1. Clone this repository in your workstation and open the index.adoc file, an Asciidoc file that already contains a basic template of a (very small) ICD, for editing.
 2. Add some content to the ICD, commit and push it into the repository.
-3. Open the [documentation dashboard](http://tobedepplyed.com), authenticate with the credentials sent to you by email. Once the documents have been generated, your document should be listed as either ___NOT PUBLISHED - FAILED REVIEW SUBMISSION___ or ___NOT PUBLISHED - NEW STAGING VERSION___.
+3. Open the [documentation dashboard](https://documentation-dashboard.herokuapp.com/), authenticate with the credentials sent to you by email. Once the documents have been generated, your document should be listed as either ___NOT PUBLISHED - FAILED REVIEW SUBMISSION___ or ___NOT PUBLISHED - NEW STAGING VERSION___.
 
 In the first case, there was an error. Check the details on the dashboard (add gif here). In the latter, check and open the URL of the staging version (for sharing with the involved people).
 
@@ -77,7 +79,7 @@ addrmap tiny {
 -----
 ```
 
-2. Add a sentence on the ICD that uses the acronym KFCA. Test the document locally, or commit/add a new version tag. Check the way the pipeline has two types of documentation publication failures: consistency errors, and failed 'quality gates': 
+2. Add a sentence on the ICD that uses the acronym KSP. Test the document locally, or commit/add a new version tag. Check the way the pipeline has two types of documentation publication failures: consistency errors, and failed 'quality gates': 
 
 - Error: internal inconsistencies in the SystemRDL model.
 - Failed Quality gates: an optional SystemRDL element (in this case endianness), that was set as mandatory in this context, was missed; an acronym was included but not described in the document.
@@ -88,7 +90,6 @@ addrmap tiny {
      To be defined
     ```
     
-
     - Add the macro glossary:default[] in the section where you want the glossary to be populated. 
     - Go to the dashboard, select Glossaries, and look for the acronym. There you can see how you can refer to the acronym within the document in a way its definition is automatically included in the document's glossary.
 
