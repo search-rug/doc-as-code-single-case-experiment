@@ -75,11 +75,11 @@ $ git tag -a v0.1 -m "Draft version ... "
 
 ### Scenario two - Quality gates
 
-The concept of 'quality gate' refers to the acceptance criteria a project must meet before proceeding to the follow-up delivery phases. In software, automatically verifiable criteria are integrated into the CI/CD environment with this purpose. The proposed documentation approach would enforce two main criteria related to the issues dicussed at the beginning of the document: prose quality/clarity, and completeness of expected technical details provided. In this proof of concept, two 'quality gates' are included for illustrative purposes: (1) acronmyms must be explicitly defined by linking them to an entry in a centralized glossary, and (2) the models used in the document to describe hardware elements must explicitly define the endianness of the registers. For the latter, you will use a prelimiary version of an extension for describing hardware using SystemRDL language (it is not necessary to have to previous knowledge about its syntax, as the exercise will guide you on how to modify it). 
+The concept of 'quality gate' refers to the acceptance criteria a project must meet before proceeding to the follow-up delivery phases. In software, automatically verifiable criteria are integrated into the CI/CD environment with this purpose. The proposed documentation approach would enforce two main criteria related to the issues dicussed at the beginning of the document: prose quality/clarity, and completeness of expected technical details provided. In this proof of concept, two 'quality gates' are included for illustrative purposes: (1) acronmyms must be explicitly defined by linking them to an entry in a centralized glossary, and (2) the models used in the document to describe hardware elements must explicitly define the endianness of the registers. For the latter, you will use a prelimiary version of an asciidoc extension that allows to embed hardware definitions in SystemRDL language (it is not necessary to have to previous knowledge about its syntax, as the exercise will guide you on how to modify it). 
 
 Steps:
 
-1. Add a SystemRDL model. The following one represents a registers map for a device called 'turboencarbulator'. However, it has an issue, as the addresses overlap, and the endianness is not defined:
+1. Add a SystemRDL model. The following one represents a registers map for a device called 'turboencarbulator'. In a nutshell, it describes a register map (REG1) with two fields (f1 and f2) of 8 and 16 bits respectively, and a default value of 256 for the former. Note that the dashes (----) are not part of SystemRDL defintion, but the way Asciidoc defines the beginning and the end of the [systemrdl] macro. Pretend that you overlooked the inconsistency of storing 256 in a 8-bit field, and copy the definition as-is in the first document created on the previous scenario.
 
 
 ```
@@ -88,21 +88,28 @@ Steps:
 addrmap tiny {
     reg {
         field {
- 	    name="reg_aa";
+ 	        name="reg_aa";
             sw=rw;
             hw=r;
-        } f1[8] = 123;
+        } f1[8] = 256;
 
         field {
+ 	        name="reg_bb";
             sw=r;
             hw=w;
         } f2[16];
-    }r1;
+    }REG1@0x2D;
 };
 -----
 ```
 
-2. Add a sentence on the ICD that uses the acronym KSP. Test the document locally, or commit/add a new version tag. Check the way the pipeline has two types of documentation publication failures: consistency errors, and failed 'quality gates': 
+2. In the same document, add a sentence on the ICD that includes the acronym 'KSP'. Commit these two changes, create a new version tag, and push it on the repository. This version  has one error -the inconsistency of on the default value of the registry field- and to conflicts with quality gates, as the registry map doesn't define the endiannes, and an acronym is not 
+
+Check the way the pipeline has two types of documentation publication failures: consistency errors, and failed 'quality gates': 
+
+
+2. However, this definition has two issues: the default value for f1, 256, doesn't fit on the 8 bits of the field. Second, it doesn't follow one of the quality gates: endianness must be always defined on a register map.
+
 
 - Error: internal inconsistencies in the SystemRDL model.
 - Failed Quality gates: an optional SystemRDL element (in this case endianness), that was set as mandatory in this context, was missed; an acronym was included but not described in the document.
