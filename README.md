@@ -164,11 +164,9 @@ file(SHA256 ./rover.h current_bytecode)
 
 2. Commit, add a new version tag, and push it (including the tag). Check the status of both documents on the Dashboard (both should be PUBLISHED).
 
-3. Now, modify the SystemRDL specification in Document A so that reg_aa is now 'read only' for software.
+3. Now, add some extra content on Document A, and modify the SystemRDL specification in it A so that reg_aa is now 'read only'.
 
-4. add some text on Document A (the one referenced by the new document, and whose content was used in the C codebase). 
-
-4. Commit, add a new tag version and push the changes. Check the new status of Document B. Once the new version is published, the system should show Document B with a warning status, as it references an old version of Document A. Run, once again the CMake build of the project. If the process warns you about an outdated header, you are done with Scenario #3.
+4. Commit, add a new tag version and push the changes. Check the new status of Document B in the dashboard. Once the new version is published, the system should show Document B with a warning status, as it references an old version of Document A. Run, once again the CMake build of the project. If the process warns you about an outdated header, you are done with Scenario #3.
 
 
 
