@@ -1,0 +1,77 @@
+= Interface Control Document (DaC proof of concept)
+
+This is a minimalist example of an ICD for a theoretical rover, generated following an DaC philosphy..
+== Purpose
+
+== Versions history
+
+tagshistory::default[]
+
+== Reference documents
+
+references::default[]
+
+== Glossary
+
+
+== System overview
+
+
+This is a system overview described using text-based diagram specifications that makes easier its maintinance and version control. Here you can use the 'acr' macro (for example, with the acronym acr:AIPS++[]) to automatically include its description on the document's glossary, based on the centralized glossary data source defined for the tool (at the moment the building process is configured with a data-source mock, with only a few acronyms). This will be extended to also include context-based definitions and abbreviations (linked to a proper terminology management systems). 
+
+
+
+
+In this document you can make use of the existing Asciidoctor plugins to create text-based diagrams, like the following ditaa diagram and PlantUML diagrams:
+
+[ditaa]
+----
+                   +-------------+
+                   | Asciidoctor |-------+
+                   |   diagram   |       |
+                   +-------------+       | PNG out
+                       ^                 |
+                       | ditaa in        |
+                       |                 v
+ +--------+   +--------+----+    /---------------\
+ |        | --+ Asciidoctor +--> |               |
+ |  Text  |   +-------------+    |   Beautiful   |
+ |Document|   |   !magic!   |    |    Output     |
+ |     {d}|   |             |    |               |
+ +---+----+   +-------------+    \---------------/
+     :                                   ^
+     |          Lots of work             |
+     +-----------------------------------+
+----
+
+
+[plantuml, target=diagram-classes, format=png]   
+----
+class BlockProcessor
+class DiagramBlock
+class DitaaBlock
+class PlantUmlBlock
+
+BlockProcessor <|-- DiagramBlock
+DiagramBlock <|-- DitaaBlock
+DiagramBlock <|-- PlantUmlBlock
+----
+
+
+== Interfacing details
+
+*Registry maps specifications*
+
+The following is a proof of concept of the Asciidoctor extensions that are being developed to allow a technical writer to specify a hardware interface (in this case, a registers map) following an industry standard like SystemRDL. The document building process take care of turning this specification into a readable document, and to generate the necessary artifacts to make the development of the software artifacts that require these specifications more straightforward.
+
+SystemRDL albeit being quite complete, has most of its elements optional. In order to fullfil the expected quality of the document, the building process would allow the process to include 'quality gates' that ensure the minimum elements required for the proper understanding of the system are included. The registers specifications can be defined inline (recommended only for small definitions) as follows:
+
+
+For larger registry maps, the specifications can be maintained in separate files. In both cases, the details of any systax error are informed on the CI/CD platform's dashboard:
+
+
+A set of scripts for checking that the generated artifacts are up-to-date (which could be included on the building process) are also under development.
+
+
+
+
