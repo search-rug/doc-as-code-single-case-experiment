@@ -66,11 +66,13 @@ include:
 $ git tag -a v0.1 -m "Draft version ... "
 ```
 
-7. Push the tag to the gitlab repository. This time, as you are pushing a concrete version of the document, the building and validation process will exchange information with the document management system to start keep tracking of this and future versions. Once the document has been built and published, its information should be now available on the [documentation management dashboard](https://documentation-dashboard.herokuapp.com/). Use the same user/name credentials sent to your email for authentication.
+7. Push the tag to the gitlab repository. This time, as you are pushing a concrete version of the document, the building and validation process will exchange information with the document management system to start keep tracking of this and future versions. Once the document has been built and published, its information should be now available on the [documentation management dashboard](https://documentation-dashboard.herokuapp.com/). Use the same user/name credentials sent to your email for authentication. Open the last official version of the document by following the provided link in the documents list.
+
+![](open_last_version.gif)
 
 8. Create a second repository for a different ICD (you will make references between them in one of the following scenarios) and publish a version of it. You can just duplicate the previous one and change part of the content, just do not forget to add the BACKEND_CREDENTIALS variable and enable the protected tags.
 
-8. If you are able to check the details of both documents, and their status is PUBLISHED, you are done with the basic publication scenario. Otherwise, please double check the previous steps or get in touch with the researchers for assistance). 
+9. If you are able to check the details of both documents, and their status is PUBLISHED, you are done with the basic publication scenario. Otherwise, please double check the previous steps or get in touch with the researchers for assistance). 
 
 
 ### Scenario two - Quality gates
@@ -79,7 +81,7 @@ The concept of 'quality gate' refers to the acceptance criteria a project must m
 
 Steps:
 
-1. Add a SystemRDL model. The following one represents a registers map for a device called 'turboencarbulator'. In a nutshell, it describes a register map (REG1) with two fields (f1 and f2) of 8 and 16 bits respectively, and a default value of 256 for the former. Note that the dashes (----) are not part of SystemRDL defintion, but the way Asciidoc defines the beginning and the end of the [systemrdl] macro. Pretend that you overlooked the inconsistency of storing 256 in a 8-bit field, and copy the definition as-is in the first document created on the previous scenario.
+1. Add a SystemRDL model to your first document. The following one represents a registers map for a device called 'turboencarbulator'. In a nutshell, it describes a register map (REG1) with two fields (f1 and f2) of 8 and 16 bits respectively, and a default value of 256 for the former. Note that the dashes (----) are not part of SystemRDL defintion, but the way Asciidoc defines the beginning and the end of the [systemrdl] macro. Pretend that you overlooked the inconsistency of storing 256 in a 8-bit field, and copy the definition as-is in the first document created on the previous scenario.
 
 
 ```
@@ -103,74 +105,70 @@ addrmap tiny {
 -----
 ```
 
-2. In the same document, add a sentence on the ICD that includes the acronym 'KSP'. Commit these two changes, create a new version tag, and push it on the repository. This version  has one error -the inconsistency of on the default value of the registry field- and to conflicts with quality gates, as the registry map doesn't define the endiannes, and an acronym is not 
+2. In the same document, add a sentence on the ICD that includes the acronym 'KSP'. Commit these two changes, create a new version tag, and push it on the repository. This version  has one error -the inconsistency of on the default value of the registry field- and two conflicts with quality gates, as the registry map doesn't define the endiannes, and an uncommon acronym is not defined. Open the [management dashboard](https://documentation-dashboard.herokuapp.com/) and check the new status of the document, and the information provided by the 'failed ICD builds' section on it.
 
-Check the way the pipeline has two types of documentation publication failures: consistency errors, and failed 'quality gates': 
+3. Fix the inconsistencies in the document. First, in the [management dashboard](https://documentation-dashboard.herokuapp.com/) go to the Glossary section and search for the KSP acronym (acronyms/abrreviations management features would be available in future versions). From there you can copy the macro required to insert acronyms definitions (acr:<acronym>[context=<context>]) in the document. Replace the word KSP in the document with its corresponding 'acr:' macro.
+
+![](copy-glossary-ref.gif)
+
+4. Add a 'Glossary' title in the document, and below it add the macro glossary:default[] so that the building process will generate the abbreviations section.
+
+5. Change the size of the field 'f1' of the SystemRDL definition so that it can now hold the default 256 value, and define the endianness by adding __bigendian;__ or __littleendian__, e.g.,:
+
+```
+     addrmap tiny {
+        littleendian;        
+        reg {
+            field {
+            ...
+```
 
 
-2. However, this definition has two issues: the default value for f1, 256, doesn't fit on the 8 bits of the field. Second, it doesn't follow one of the quality gates: endianness must be always defined on a register map.
+4. Commit the changes, set a new version tag, and push it to the repository. Once the [documentation dashboard](https://documentation-dashboard.herokuapp.com/) shows the document as Published, open its last version. As you can see, the generated document now includes a human-redable representation of the SystemRDL specification. Furthermore, with the two buttons below it you can copy two URLs: one with a C header file that corresponds to the SystemRDL model, an another to its checksum. 
 
-
-- Error: internal inconsistencies in the SystemRDL model.
-- Failed Quality gates: an optional SystemRDL element (in this case endianness), that was set as mandatory in this context, was missed; an acronym was included but not described in the document.
-
-3. Fix the inconsistencies:
-    - Add the following elements to the SystemRDL specification:
-    ```
-     To be defined
-    ```
-    
-    - Add the macro glossary:default[] in the section where you want the glossary to be populated. 
-    - Go to the dashboard, select Glossaries, and look for the acronym. There you can see how you can refer to the acronym within the document in a way its definition is automatically included in the document's glossary.
-
-4. Commit, set a new version tag, and push. Look at the generated elements, namely: a human-readable representation of the registry, and the C headers.
-
+5. If you can download both documents (e.g., with the wget or curl commands), you have succesfuly completed this second scenario. 
+  
 
 ### Scenario three - ICDs as the single source of truth, centralized versions/dependencies tracking.
 
-This scenario illustrates how having the ICDs as the single source of truth (by making them machine-readable), and keeping track of dependencies between documents, would enable features to assist in the prevention of these outdatedness-related issues. The chosen platforms/tools  (C++, CMake) are for illustrative purposes only, and the example is minimalist for the sake of simplicity of the exercise. Here you will (1) create a simple codebase that makes use of the information given by the document created in the previous scenario, and (2) add a new document that makes reference to this document.
+This scenario illustrates how having the ICDs as the single source of truth (by making them machine-readable), and keeping track of the dependencies between documents, would enable features to prevent: (1) working with ICDs that might require revision (as their references have been updated), or (2) working with artifacts derived from outdated specificaion without noticing it. The chosen platforms/tools  (C, CMake) are for illustrative purposes only, and the example is minimalist for the sake of simplicity of the exercise. Here you will (1) create a simple codebase that makes use of the information given by the document created in the previous scenario, and (2) add a new document that makes reference to this document.
 
 
-1. Clone the C++ codebase from [this repository](http://to_be_defined).
-2. Open the document previously published (on its deployment site). Go to the section where the register map was defined. Copy the header URL.
+1. Clone the C++ codebase from [this repository](https://gitlab.com/hcadavid/icd-aware-build-script).
+
+2. Open the document previously published (on its deployment site). Go to the section where the register map was defined. Copy he URL of the header C file.
 
 ![](copy-header-url.gif)
 
-3. Pull the header inside the project, and add it in the CMake file.
-```
-wget [url]
-``` 
-3. In the document, copy the URL of the header's checksum, add it in your CMake file as follows. If you don't have CMake installed, do this in this containerized environment:
+3. Download the header file inside the project (e.g., use wget or curl).
+
+4. By convention, if the URL of the header file is __https://user.gitlab.io/icdname/vx.x/header.h__, the checksum of the most recent version of the header would be available at __https://user.gitlab.io/icdname/latest/header.h.sha__. Edit the CMake file (CmakeLists.txt), and change the line #5 so that it always download the last version of the header's checksum to compare it against the checksum of the header in the codebase. E.g., if the header  was downloaded from __https://hcadavid.gitlab.io/turboencarbulator/v1.8/rover.h__, the build script will be sa follows:
+
 
 ```C
 cmake_minimum_required(VERSION 3.15)
 
-project(header_check_example)
+project(online_header_check_example)
 
-file(DOWNLOAD CHECKSUM_URL ${CMAKE_CURRENT_BINARY_DIR}/checksum)
+file(DOWNLOAD https://hcadavid.gitlab.io/turboencarbulator/latest/rover.h.sha ${CMAKE_CURRENT_BINARY_DIR}/checksum)
 file(STRINGS ${CMAKE_CURRENT_BINARY_DIR}/checksum updated_checksum)
-file(SHA256 ./turboencarbulator.hpp current_bytecode)
-
-if (NOT ${updated_checksum} STREQUAL ${current_bytecode})
-        message("Warning: the header of turboencarbulator.hpp might not be up-to-date with respect to the ICD it was based on")
-else()
-        message("Checksum check... OK")
-endif()
-
-add_executable(app main.cpp)
-
+file(SHA256 ./rover.h current_bytecode)
+...
 ```
 
-4. Edit the [ICD A2](http://to_be_defined), and add a reference to the previously created one. To do so, go to the dashboard, find the previously created document and copy the AsciiDoc macro used for referencing other documents:
+5. Run the script and make sure it shows that the library is up-to-date.
+
+4. Edit the second document created in the first scenario (let's call it Document B), and add a reference to the one you worked on in the previous scenario (the one with the SystemRDL specification, let's call it Document A). To do so, go to the dashboard, find the Document A and copy the AsciiDoc macro used for referencing documents ([docmacro]). Insert this macro within a sentence in document B.
 
 ![copying-docref-macro.gif](copying-docref-macro.gif)
 
-2. Commit, add a new version tag, and push it (including the tag). Check the status of both documents on the Dashboard (both should be PUBLISHED)
+2. Commit, add a new version tag, and push it (including the tag). Check the status of both documents on the Dashboard (both should be PUBLISHED).
 
-3. Now, let's assume a change is made to the original document (the one referenced by the new document, and whose content was used in the codebase). Let's modify the SystemRDL specification of the 'turboencarbulator' so that reg_aa is now 'read only' for software.
+3. Now, modify the SystemRDL specification in Document A so that reg_aa is now 'read only' for software.
 
-4. Commit, add a new tag version and push the changes. Check the new status of the ICD A2, and the information available for a person to analyze how to deal with the scenario of working with a document that might require being revisited.
-5. Returning to the developer perspective: go to the development environment and, re-run the build process and see difference on the output after the updates on the ICD.
+4. add some text on Document A (the one referenced by the new document, and whose content was used in the C codebase). Let's 
+
+4. Commit, add a new tag version and push the changes. Check the new status of Document B. Once the new version is published, the system should show Document B with a warning status, as it references an old version of Document A. Run, once again the CMake build of the project. If the process warns you about an outdated header, you are done with Scenario #3.
 
 
 
