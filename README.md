@@ -43,7 +43,7 @@ Steps:
 
 1. Create a new public, empty repository on Gitlab (https://www.gitlab.com), as the tools have not been tested on private Gitlab configurations. Choose a name that you think would be meaninful for a technical document.
 
-2. Use the [following document](http://) as a template for your first (and rather small) ICD. Make sure you the file is in the root of the repository, and that it keeps the 'index.adoc' name. Add this document to your repository. Add some content or diagramas.
+2. Use the [following document](index.adoc) as a template for your first (and rather small) ICD. Make sure you the file is in the root of the repository, and that it keeps the 'index.adoc' name. Add this document to your repository. Add some content or diagramas.
 
 3. To integrate your repository into the centralized documentation pipeline, first enable the "Protected Tags" to the ones with the pattern v* (allowing developers and maintainers to create them). Then set the variable BACKEND_CREDENTIALS (with the values sent to you by email), with the flags 'Protect variable' and 'Mask variable' enabled.
 
