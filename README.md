@@ -158,15 +158,15 @@ file(SHA256 ./rover.h current_bytecode)
 
 5. Run the script and make sure it shows that the library is up-to-date.
 
-4. Edit the second document created in the first scenario (let's call it Document B), and add a reference to the one you worked on in the previous scenario (the one with the SystemRDL specification, let's call it Document A). To do so, go to the dashboard, find the Document A and copy the AsciiDoc macro used for referencing documents ([docmacro]). Insert this macro within a sentence in document B.
+6. Edit the second document created in the first scenario (let's call it Document B), and add a reference to the one you worked on in the previous scenario (the one with the SystemRDL specification, let's call it Document A). To do so, go to the dashboard, find the Document A and copy the AsciiDoc macro used for referencing documents ([docmacro]). Insert this macro within a sentence in document B.
 
 ![copying-docref-macro.gif](copying-docref-macro.gif)
 
-2. Commit, add a new version tag, and push it (including the tag). Check the status of both documents on the Dashboard (both should be PUBLISHED).
+7. Commit, add a new version tag, and push it (including the tag). Check the status of both documents on the Dashboard (both should be PUBLISHED).
 
-3. Now, add some extra content on Document A, and modify the SystemRDL specification in it A so that reg_aa is now 'read only'.
+8. Now, add some extra content on Document A, and modify the SystemRDL specification in it A so that reg_aa is now 'read only'.
 
-4. Commit, add a new tag version and push the changes. Check the new status of Document B in the dashboard. Once the new version is published, the system should show Document B with a warning status, as it references an old version of Document A. Run, once again the CMake build of the project. If the process warns you about an outdated header, you are done with Scenario #3.
+9. Commit, add a new tag version and push the changes. Check the new status of Document B in the dashboard. Once the new version is published, the system should show Document B with a warning status, as it references an old version of Document A. Run, once again the CMake build of the project. If the process warns you about an outdated header, you are done with Scenario #3.
 
 
 
