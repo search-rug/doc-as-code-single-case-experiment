@@ -58,7 +58,7 @@ include:
   - remote: https://gitlab.com/hcadavid/dac-pipeline-configuration/-/raw/main/cicdconfig.yml
 ```
 
-5. Once you commit and push the above changes, a CI/CD job should be launched. The compiled document should be now accessible in gitlab pages at <your_user_name>.gitlab.io/stage. This 'staging' version of the document, which won't be considered as an official one, would be useful for reviews before posting an actual version of the document.
+5. Once you commit and push the above changes, a CI/CD job should be launched. The compiled document should be now accessible in gitlab pages at <your_user_name>.gitlab.io/<repo_name>/stage. This 'staging' version of the document, which won't be considered as an official one, would be useful for reviews before posting an actual version of the document.
 
 6. Now, add more content to what will be the first official version of the document. In order publish the document as such, commit the changes and create an annotated tag. Given that the messages on the annotated tags would be used for automatically generate the __Document history__ section of the document, write one that would work for this purpose, e.g.:
 
