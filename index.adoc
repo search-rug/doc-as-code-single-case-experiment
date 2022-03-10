@@ -61,13 +61,11 @@ DiagramBlock <|-- PlantUmlBlock
 
 The following is a proof of concept of the Asciidoctor extensions that are being developed to allow a technical writer to specify a hardware interface (in this case, a registers map) following an industry standard like SystemRDL. The document building process take care of turning this specification into a readable document, and to generate the necessary artifacts to make the development of the software artifacts that require these specifications more straightforward.
 
-SystemRDL albeit being quite complete, has most of its elements optional. In order to fullfil the expected quality of the document, the building process would allow the process to include 'quality gates' that ensure the minimum elements required for the proper understanding of the system are included. The registers specifications can be defined inline (recommended only for small definitions) as follows:
+SystemRDL albeit being quite complete, has most of its elements optional. In order to fullfil the expected quality of the document, the building process would allow the process to include 'quality gates' that ensure the minimum elements required for the proper understanding of the system are included. The registers specifications can be defined inline using the [systemrdl] macro. For larger registry maps, the specifications can be maintained in separate files. In both cases, the details of any systax error are informed on the CI/CD platform's dashboard.
+
+Furthermore, it is worth noting that the platform is extensible, so further extensions for more specifications formalisms could be integrated with relative ease.
 
 
-For larger registry maps, the specifications can be maintained in separate files. In both cases, the details of any systax error are informed on the CI/CD platform's dashboard:
-
-
-A set of scripts for checking that the generated artifacts are up-to-date (which could be included on the building process) are also under development.
 
 
 
