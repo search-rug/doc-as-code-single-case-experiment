@@ -152,7 +152,7 @@ $ make
 $ ./app
 ```
 
-4. Edit the second document created in the first scenario (from now on document B), and add a reference to document A. To do so, go to the dashboard, find the Document A and copy the AsciiDoc macro required for referencing documents ([docmacro]). Insert this macro within a sentence in document B.
+4. Edit the second document created in the first scenario (from now on document B), and add a reference to document A. To do so, go to the dashboard, find the Document A and copy the AsciiDoc macro required for referencing documents ([docref:<doc_name>[version=<doc_version>]]). Insert this macro within a sentence in document B.
 
 ![copying-docref-macro.gif](copying-docref-macro.gif)
 
