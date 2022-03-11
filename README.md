@@ -113,7 +113,7 @@ addrmap tiny {
 
 ![](copy-glossary-ref.gif)
 
-4. Below the 'Glossary' section of the document add the macro glossary:default[] so that the building process generates a table with the definitions.
+4. Below the 'Glossary' section of the document add the macro glossary::default[] so that the building process generates a table with the definitions.
 
 5. Change the size of the field 'f1' of the SystemRDL definition so that it can now hold the default 256 value, and define the endianness by adding __bigendian;__ or __littleendian__, e.g.,:
 
