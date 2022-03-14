@@ -176,7 +176,10 @@ $ ./app
 6. Now, make changes to the content of Document A, and modify the SystemRDL specification in it so that reg_aa is now 'read only' for software, and the default value is 0.
 
 7. Commit, add a new tag version and push the changes. Check the new status of Document B in the dashboard. Once the new version is published, the system should show Document B with a warning status, as it references an old version of Document A. Run, once again the CMake build of the project. If the process warns you about an outdated header, you are done with Scenario #3.
-
+\
+\
+\
+\
 
 
 
