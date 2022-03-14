@@ -182,7 +182,7 @@ $ ./app
 
 
 
-Thank you for your participation on this exercise. Your feedback is really important for this study, so we would really appreciate if you could fill out [this survey](https://rug.eu.qualtrics.com/jfe/form/SV_8okI7KLnEEWkaiy).
+***Thank you for your participation on this exercise!*** Your feedback is really important for this study, so we would really appreciate if you could fill out [this survey](https://rug.eu.qualtrics.com/jfe/form/SV_8okI7KLnEEWkaiy).
 
 
 
