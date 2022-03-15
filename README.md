@@ -71,7 +71,9 @@ $ git tag -a v0.1 -m "Draft version ... "
 
 ### Scenario two - Content generation and Quality gates
 
-This scenario illustrates how the proposed ICDs management approach would reduce redundant -and error-prone- writing/transcription efforts by means of content/code generation, and how the quality and completeness of such generated artifacts can be enfored by means of 'quality gates'.
+This scenario illustrates how the proposed ICDs management approach (1) would reduce redundant -and error-prone- writing/transcription efforts by means of content/code generation, and (2) how the overall quality of the documentation could be improved by enforcing quality and completeness criteria by means of 'quality gates' (also reducing hard feelings between writers and reviewers in the process).
+
+Please note that this scenario assumes that a fully-fledged editing environment will be available so that technical writers will be able to evaluate their documents locally (and in real time), with the same rules and metrics, before submitting changes to the documentation pipeline.
 
 The concept of 'quality gate' refers to the acceptance criteria a project must meet before proceeding to the follow-up delivery phases. In software, automatically verifiable criteria are integrated into the CI/CD environment with this purpose. The proposed documentation approach would enforce two main criteria, related to the issues previously discussed: writing quality/clarity, and completeness of the technical details provided. In this proof of concept, two 'quality gates' are enabled for illustrative purposes: (1) acronyms must be explicitly defined by linking them to an entry in a centralized glossary, and (2) the models used in the document to describe hardware elements must explicitly define the endianness of the registers. For the latter, you will use a preliminary version of an asciidoc extension that allows to embed hardware definitions using the SystemRDL language (it is not necessary to have to previous knowledge about its syntax, as the exercise will guide you on how to modify it). 
 
