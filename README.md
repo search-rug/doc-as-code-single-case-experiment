@@ -41,38 +41,32 @@ In the proposed documentation management approach, each ICD is written in a mark
 
 Steps:
 
-1. Create a new public, empty repository on Gitlab (https://www.gitlab.com), as the tools have not been tested on private Gitlab configurations. Choose a name that you think would be meaningful for a technical document.
+1. Create on your Gitlab (https://www.gitlab.com) two public repositories for the documents you will be working on during this exercise (from now on, document A and document B). To do so, fork [this template repository](https://gitlab.com/hcadavid/document-repository-template) twice, changing both repositories names to something you would use for an ICD document. Keep in mind that these forks now include (1) a basic index.adoc document to work on, and (2) a .gitlab-ci.yml file (Gitlab's CI configuration file) already configured to fire a job -upon a document update- with the tooling required to integrate the repository in the proposed documentation pipeline.
 
-2. Use the [following document](index.adoc) as a template for your first (and rather small) ICD. Make sure the file is in the root of the repository, and that it keeps the 'index.adoc' name. Add this document to your repository. Add some content or diagramas if you want.
-
-3. To integrate your repository into the centralized documentation pipeline, first enable the "Protected Tags" to the ones with the pattern v* (allowing developers and maintainers to create them). Then set the variable BACKEND_CREDENTIALS (with the values sent to you by email), with the flags 'Protect variable' and 'Mask variable' enabled.
+2. The aforemientioned tooling requires authorization before they can interact with the documentation management system. To do so, first enable the "Protected Tags" to the ones with the pattern v* (allowing developers and maintainers to create them). Then set the variable BACKEND_CREDENTIALS (with the values sent to you by email), with the flags 'Protect variable' and 'Mask variable' enabled.
 
 ![](protected_tag.png)
 
 ![](add_variable.gif)
 
-4. Create a .gitlab-ci.yml (with the '.' at the beginning) at the root of your local repository if it doesn't exist yet. Set the following YAML code as its (only) content:
+2. Add some content to the document A by cloning it in your computer and adding some content to them (so you can tell one from the other) using a local Asciidoc editor like [AsciidoctorFX](https://asciidocfx.com/), and commiting/pushing the changes to the repository afterwards. Alternatively, you can do the above using Gitlab's web editor.
 
-```yml
-include:
-  - remote: https://gitlab.com/hcadavid/dac-pipeline-configuration/-/raw/main/cicdconfig.yml
-```
+3. Once you have committed and pushed the above changes, a CI/CD job should be launched on document A's repo. The compiled version of the document should be now be available in gitlab pages at <your_user_name>.gitlab.io/<repo_name>/stage. This 'staging' version of the document, which won't be considered as an official one, would be useful for reviews before posting an actual version of the document.
 
-5. Once you have committed and pushed the above changes, a CI/CD job should be launched. The compiled document should be now accessible in gitlab pages at <your_user_name>.gitlab.io/<repo_name>/stage. This 'staging' version of the document, which won't be considered as an official one, would be useful for reviews before posting an actual version of the document.
-
-6. Now, add more content to what will be the first official version of the document. In order to publish the document as such, commit the changes and create an annotated tag. Given that the messages on the annotated tags would be used to automatically generate the __Document history__ section of the document, write one that would work for this purpose, e.g.:
+4. Now, add some more content to Document A, and make this the first 'official' version of it. To do so, commit the changes and create an annotated tag. Given that the messages on the annotated tags would be used to automatically generate the __Document history__ section of the document, write one that would work for this purpose, e.g.:
 
 ```
 $ git tag -a v0.1 -m "Draft version ... "
+(alternatively, create the new tag -with a comment- on Gitlab's web interface)
 ```
 
-7. Push the tag to the gitlab repository. This time, as you are pushing a concrete version of the document, the building and validation process will exchange information with the document management system to start to keep tracking of this and future versions. Once the document has been built and published, its information should be now available on the [documentation management dashboard](https://documentation-dashboard.herokuapp.com/). Use the same user/name credentials sent to your email for authentication. Open the last official version of the document by following the provided link in the documents list.
+5. Push the tag to the gitlab repository. This time, as you are pushing an specific version of the document, the building and validation process this time will exchange information with the document management system to start to keep tracking of this and future versions. Once the document has been built and published, its information should be now available on the [documentation management dashboard](https://documentation-dashboard.herokuapp.com/). Use the same user/name credentials sent to your email for authentication. Open the last official version of the document by following the provided link in the documents list.
 
 ![](open_last_version.gif)
 
-8. Create a second repository for a different ICD (you will make references between them in one of the following scenarios) and publish a version of it. You can just duplicate the previous one and change part of the content, just do not forget to add the BACKEND_CREDENTIALS variable and enable the protected tags.
+6. Now, do the same to Document B: add some content, commit it, create a version tag, and push it to the documents repository).
 
-9. If you are able to check the details of both documents, and their status is PUBLISHED, you are done with the basic publication scenario. Otherwise, please double-check the previous steps or get in touch with the researchers for assistance). 
+7. If you are able to check the details of both documents, and their status is PUBLISHED, you are done with the basic publication scenario. Otherwise, please double-check the previous steps or get in touch with the researchers for assistance). 
 
 
 ### Scenario two - Content generation and Quality gates
