@@ -178,7 +178,7 @@ $ ./app
 
 
 
-***Thank you for your participation in this exercise!*** This exercise presented a working proof of concept that resulted from the first cycle of an action resarch study. Your feedback is really important to improve/adjust to the overall  documentation management approach and its related artifacts (before turning them into proper open source software projects) for the following cycle. Given this we would really appreciate it if you could fill out [this survey](https://rug.eu.qualtrics.com/jfe/form/SV_8okI7KLnEEWkaiy). Thank you agan for your time and consideration.
+***Thank you for your participation in this exercise!*** This exercise presented a working proof of concept that resulted from the first cycle of an action resarch study. Your feedback is really important to improve/adjust the overall  documentation management approach and its related artifacts (before turning them into proper open source software projects) for the following cycle of the study. Given this, we would really appreciate it if you could fill out [this survey](https://rug.eu.qualtrics.com/jfe/form/SV_8okI7KLnEEWkaiy). Thank you again for your time and consideration.
 
 
 
