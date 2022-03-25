@@ -37,6 +37,8 @@ In the following exercise, you will perform a test-drive, in a set of scenarios,
 
 ### Scenario one - Document versioning and basic ICDs publication/tracking
 
+Note: You can do this exercise online, using GitLab's web editor, or locally, installing and editor like [AsciidoctorFX](https://asciidocfx.com/) and using your local git client.
+
 In the proposed documentation management approach, each ICD is written in a markup language and maintained on its own Git repository. In this exercise, you will test-drive two artifacts: (1) a docker container that builds and test (against the predefined 'quality gates') these documents within a CI/CD pipeline, and (2) a document-centered platform that keeps track of the status of the overall documentation.
 
 Steps:
