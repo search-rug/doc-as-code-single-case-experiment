@@ -77,7 +77,7 @@ This scenario illustrates how the proposed ICDs management approach (1) would re
 
 Please note that this scenario assumes that a fully-fledged editing environment will be available so that technical writers will be able to evaluate their documents locally (and in real time), with the same rules and metrics, before submitting changes to the documentation pipeline.
 
-The concept of 'quality gate' refers to the acceptance criteria a project must meet before proceeding to the follow-up delivery phases. In software, automatically verifiable criteria are integrated into the CI/CD environment with this purpose. The proposed documentation approach would enforce two main criteria, related to the issues previously discussed: writing quality/clarity, and completeness of the technical details provided. In this proof of concept, two 'quality gates' are enabled for illustrative purposes: (1) acronyms must be explicitly defined by linking them to an entry in a centralized glossary, and (2) the models used in the document to describe hardware elements must explicitly define the endianness of the registers. For the latter, you will use a preliminary version of an asciidoc extension that allows to embed hardware definitions using the SystemRDL language (it is not necessary to have to previous knowledge about its syntax, as the exercise will guide you on how to modify it). 
+The concept of 'quality gate' refers to the acceptance criteria a project must meet before proceeding to the follow-up delivery phases. In software, automatically verifiable criteria are integrated into the CI/CD environment with this purpose. The proposed documentation approach would enforce two main criteria, related to the issues previously discussed: writing quality/clarity, and completeness of the technical details provided. In this proof of concept, two 'quality gates' are enabled for illustrative purposes: (1) the measurements of distance, temperature, volume, size, weight, etc, must always be described with numerals (as suggested by Microsoft's style guidelines), and (2) the models used in the document to describe hardware elements must explicitly define the endianness of the registers. For the latter, you will use a preliminary version of an asciidoc extension that allows to embed hardware definitions using the SystemRDL language (it is not necessary to have to previous knowledge about its syntax, as the exercise will guide you on how to modify it). 
 
 Steps:
 
@@ -105,17 +105,11 @@ addrmap tiny {
 -----
 ```
 
-2. In the same document, add a sentence on the ICD that includes the acronym 'KSP'. Commit these two changes, create a new version tag, and push it on the repository. This version has one error -the inconsistency of on the default value of the registry field- and two conflicts with quality gates, as the registry map doesn't define the endianness, and an uncommon acronym is not properly defined. Open the [management dashboard](https://documentation-dashboard.herokuapp.com/) and check the new status of the document, and the information provided by the 'failed ICD builds' section on it.
+2. In the same document, add a sentence with the value of a unit of measure spelled (e.g., 'ten centimeters'). Commit these two changes, create a new version tag, and push it on the repository. This version has one error -the inconsistency of on the default value of the registry field- and two conflicts with quality gates, as the registry map doesn't define the endianness, and there are violations to an (hypothetical) writing style guidelines. Open the [management dashboard](https://documentation-dashboard.herokuapp.com/) and check the new status of the document, and the information provided by the 'failed ICD builds' section on it.
 
 ![](errors-check.gif)
 
-3. Fix the inconsistencies in the document. First, in the [management dashboard](https://documentation-dashboard.herokuapp.com/) go to the Glossary section and search for the KSP acronym (acronyms/abrreviations management features would be available in future versions). From there, copy the macro required to insert acronyms definitions (acr:<acronym>[context=<context>]) in the document. Replace the word KSP in the document with its corresponding 'acr:' macro.
-
-![](copy-glossary-ref.gif)
-
-4. Below the 'Glossary' section of the document add the macro glossary::default[] so that the building process generates a table with the definitions.
-
-5. Change the size of the field 'f1' of the SystemRDL definition so that it can now hold the default 256 value, and define the endianness by adding __bigendian;__ or __littleendian__, e.g.,:
+3. Fix the way the value of the unit of measure was described in the text. Change the size of the field 'f1' of the SystemRDL definition so that it can now hold the default 256 value, and define the endianness by adding __bigendian;__ or __littleendian__, e.g.,:
 
 ```
      addrmap tiny {
@@ -125,10 +119,15 @@ addrmap tiny {
             ...
 ```
 
+5. Before commiting the changes, add an acronym into the document using the centralized glossary management feature. In the [management dashboard](https://documentation-dashboard.herokuapp.com/) go to the Glossary section and search for the KSP acronym (acronyms/abrreviations management features would be available in future versions). From there, copy the macro required to insert acronyms definitions (acr:<acronym>[context=<context>]) in the document. Write a sentence that includes the acronym and use the macro within it accordingly. 
 
-6. Commit the changes, set a new version tag, and push it to the repository. Once the [documentation dashboard](https://documentation-dashboard.herokuapp.com/) shows the document as Published, open its last version. As you can see, the generated document now includes a human-readable representation of the SystemRDL specification. Furthermore, with the two buttons below it you can copy two URLs: one with a C header file that corresponds to the SystemRDL model, and another to its checksum. 
+![](copy-glossary-ref.gif)
 
-7. If you can download both documents (e.g., with the wget or curl commands), you have succesfully completed this second scenario. 
+6. Below the 'Glossary' section of the document add the macro glossary::default[] so that the building process generates a table with the definitions.
+
+7. Commit the changes, set a new version tag, and push it to the repository. Once the [documentation dashboard](https://documentation-dashboard.herokuapp.com/) shows the document as Published, open its last version. As you can see, the generated document now includes a human-readable representation of the SystemRDL specification. Furthermore, with the two buttons below it you can copy two URLs: one with a C header file that corresponds to the SystemRDL model, and another to its checksum. 
+
+8. If you can download both documents (e.g., with the wget or curl commands), you have succesfully completed this second scenario. 
   
 
 ### Scenario three - ICDs as the single source of truth, centralized versions/dependencies tracking.
