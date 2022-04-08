@@ -73,11 +73,11 @@ $ git tag -a v0.1 -m "Draft version ... "
 
 ### Scenario two - Content generation and Quality gates
 
-This scenario illustrates how the proposed ICDs management approach (1) would reduce redundant -and error-prone- writing/transcription efforts by means of content/code generation, and (2) how the overall quality of the documentation could be improved by enforcing quality and completeness criteria by means of 'quality gates' (also reducing hard feelings between writers and reviewers in the process).
+This scenario illustrates how the proposed ICDs management approach (1) would reduce redundant -and error-prone- writing/transcription efforts through content/code generation, and (2) how the overall quality of the documentation could be improved by enforcing quality and completeness criteria by means of 'quality gates' (also reducing hard feelings between writers and reviewers in the process).
 
 Please note that this scenario assumes that a fully-fledged editing environment will be available so that technical writers will be able to evaluate their documents locally (and in real time), with the same rules and metrics, before submitting changes to the documentation pipeline.
 
-The concept of 'quality gate' refers to the acceptance criteria a project must meet before proceeding to the follow-up delivery phases. In software, automatically verifiable criteria are integrated into the CI/CD environment with this purpose. The proposed documentation approach would enforce two main criteria, related to the issues previously discussed: writing quality/clarity, and completeness of the technical details provided. In this proof of concept, two 'quality gates' are enabled for illustrative purposes: (1) the measurements of distance, temperature, volume, size, weight, etc, must always be described with numerals (as suggested by Microsoft's style guidelines), and (2) the models used in the document to describe hardware elements must explicitly define the endianness of the registers. For the latter, you will use a preliminary version of an asciidoc extension that allows to embed hardware definitions using the SystemRDL language (it is not necessary to have to previous knowledge about its syntax, as the exercise will guide you on how to modify it). 
+The concept of 'quality gate' refers to the acceptance criteria a project must meet before proceeding to the follow-up delivery phases. In software, automatically verifiable criteria are integrated into the CI/CD environment for this purpose. The proposed documentation approach would enforce two main criteria, related to the issues previously discussed: writing quality/clarity, and completeness of the technical details provided. In this proof of concept, two simple 'quality gates' are enabled for illustrative purposes. (1) Writing style: the measurements of distance, temperature, volume, size, weight, etc, must always be described with numerals (as suggested by Microsoft's style guidelines). (2) The hardware descriptions embedded in the document must explicitly define the endianness of the registers. For the latter, you will use a preliminary version of an Asciidoc extension that allow technical writers to embed hardware specifications using SystemRDL, which will be automatically transformed into human-readable content and base software artifacts (e.g., C headers). It is not necessary to have to previous knowledge on this language, as the exercise will guide you on how to modify it. 
 
 Steps:
 
@@ -105,7 +105,7 @@ addrmap tiny {
 -----
 ```
 
-2. In the same document, add a sentence with the value of a unit of measure spelled (e.g., 'ten centimeters'). Commit these two changes, create a new version tag, and push it on the repository. This version has one error -the inconsistency of on the default value of the registry field- and two conflicts with quality gates, as the registry map doesn't define the endianness, and there are violations to an (hypothetical) writing style guidelines. Open the [management dashboard](https://documentation-dashboard.herokuapp.com/) and check the new status of the document, and the information provided by the 'failed ICD builds' section on it.
+2. In the same document, add a sentence with the value of a unit of measure spelled (e.g., 'ten centimeters'). Commit these two changes, create a new version tag, and push it on the repository. This version has one error -the inconsistency of on the default value of the registry field- and two conflicts with quality gates, as the registry map doesn't define the endianness, and there are violations to a (hypothetical) writing style guideline. Open the [management dashboard](https://documentation-dashboard.herokuapp.com/) and check the new status of the document, and the information provided by the 'failed ICD builds' section on it.
 
 ![](errors-check.gif)
 
@@ -119,11 +119,11 @@ addrmap tiny {
             ...
 ```
 
-5. Before commiting the changes, add an acronym into the document using the centralized glossary management feature. In the [management dashboard](https://documentation-dashboard.herokuapp.com/) go to the Glossary section and search for the KSP acronym (acronyms/abrreviations management features would be available in future versions). From there, copy the macro required to insert acronyms definitions (acr:<acronym>[context=<context>]) in the document. Write a sentence that includes the acronym and use the macro within it accordingly. 
+5. Before commiting the changes, add an acronym into the document to test the centralized glossaries management feature, and how it can automatically generate a glossay in the document (acronyms/abrreviations management features would be available in future versions). This only requires to add the 'acr' macro (acr:<acronym>[context=<context>]) in the document, but alternatively you can also search for terms and copy such a macro through the documentation management plaform. To do so, in the [management dashboard](https://documentation-dashboard.herokuapp.com/) go to the Glossary section and search for an acronym (e.g., KSP). From there, copy the macro required to insert acronyms definitions in the document. Write a sentence that includes the acronym and use the macro within it accordingly. 
 
 ![](copy-glossary-ref.gif)
 
-6. Below the 'Glossary' section of the document add the macro glossary::default[] so that the building process generates a table with the definitions.
+6. Below the 'Glossary' section of the document add the macro glossary::default[] (if it isn't there yet) so that the building process generates a table with the corresponding definitions.
 
 7. Commit the changes, set a new version tag, and push it to the repository. Once the [documentation dashboard](https://documentation-dashboard.herokuapp.com/) shows the document as Published, open its last version. As you can see, the generated document now includes a human-readable representation of the SystemRDL specification. Furthermore, with the two buttons below it you can copy two URLs: one with a C header file that corresponds to the SystemRDL model, and another to its checksum. 
 
