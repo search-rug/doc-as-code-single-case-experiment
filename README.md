@@ -43,15 +43,15 @@ In the proposed documentation management approach, each ICD is written in a mark
 
 Steps:
 
-1. Create on your Gitlab (https://www.gitlab.com) two public repositories for the documents you will be working on during this exercise (from now on, document A and document B). To do so, fork [this template repository](https://gitlab.com/hcadavid/document-repository-template) twice, changing both repositories names to something you would use for an ICD document. Keep in mind that these forks now include (1) a basic index.adoc document to work on, and (2) a .gitlab-ci.yml file (Gitlab's CI configuration file) already configured to fire a job -upon a document update- with the tooling required to integrate the repository in the proposed documentation pipeline.
+1. Create on your Gitlab (https://www.gitlab.com) two public repositories for the documents you will be working on during this exercise (from now on, document A and document B). To do so, fork [this template repository](https://gitlab.com/hcadavid/document-repository-template) twice, changing both repositories' names to something you would use for an ICD document. Keep in mind that these forks now include (1) a basic index.adoc document to work on, and (2) a .gitlab-ci.yml file (Gitlab's CI configuration file) already configured to fire a job -upon a document update- with the tooling required to integrate the repository in the proposed documentation pipeline.
 
-2. The aforemientioned tooling requires authorization before they can interact with the documentation management system. To do so, first enable the "Protected Tags" to the ones with the pattern v* (allowing developers and maintainers to create them). Then set the variable BACKEND_CREDENTIALS (with the values sent to you by email), with the flags 'Protect variable' and 'Mask variable' enabled.
+2. The aforementioned tooling requires authorization before they can interact with the documentation management system. To do so, first enable the "Protected Tags" to the ones with the pattern v* (allowing developers and maintainers to create them). Then set the variable BACKEND_CREDENTIALS (with the values sent to you by email), with the flags 'Protect variable' and 'Mask variable' enabled.
 
 ![](protected_tag.png)
 
 ![](add_variable.gif)
 
-2. Add some content to the document A by cloning it in your computer and adding some content to them (so you can tell one from the other) using a local Asciidoc editor like [AsciidoctorFX](https://asciidocfx.com/), and commiting/pushing the changes to the repository afterwards. Alternatively, you can do the above using Gitlab's web editor.
+2. Add some content to the document A by cloning it in your computer and adding some content to them (so you can tell one from the other) using a local Asciidoc editor like [AsciidoctorFX](https://asciidocfx.com/), and committing/pushing the changes to the repository afterward. Alternatively, you can do the above using Gitlab's web editor.
 
 3. Once you have committed and pushed the above changes, a CI/CD job should be launched on document A's repo. The compiled version of the document should be now be available in gitlab pages at <your_user_name>.gitlab.io/<repo_name>/stage. This 'staging' version of the document, which won't be considered as an official one, would be useful for reviews before posting an actual version of the document.
 
@@ -62,7 +62,7 @@ $ git tag -a v0.1 -m "Draft version ... "
 (alternatively, create the new tag -with a comment- on Gitlab's web interface)
 ```
 
-5. Push the tag to the gitlab repository. This time, as you are pushing an specific version of the document, the building and validation process this time will exchange information with the document management system to start to keep tracking of this and future versions. Once the document has been built and published, its information should be now available on the [documentation management dashboard](https://documentation-dashboard.herokuapp.com/). Use the same user/name credentials sent to your email for authentication. Open the last official version of the document by following the provided link in the documents list.
+5. Push the tag to the gitlab repository. This time, as you are pushing a specific version of the document, the building and validation process this time will exchange information with the document management system to start to keep tracking of this and future versions. Once the document has been built and published, its information should be now available on the [documentation management dashboard](https://documentation-dashboard.herokuapp.com/). Use the same user/name credentials sent to your email for authentication. Open the last official version of the document by following the provided link in the documents list.
 
 ![](open_last_version.gif)
 
@@ -77,11 +77,11 @@ This scenario illustrates how the proposed ICDs management approach (1) would re
 
 Please note that this scenario assumes that a fully-fledged editing environment will be available so that technical writers will be able to evaluate their documents locally (and in real time), with the same rules and metrics, before submitting changes to the documentation pipeline.
 
-The concept of 'quality gate' refers to the acceptance criteria a project must meet before proceeding to the follow-up delivery phases. In software, automatically verifiable criteria are integrated into the CI/CD environment for this purpose. The proposed documentation approach would enforce two main criteria, related to the issues previously discussed: writing quality/clarity, and completeness of the technical details provided. In this proof of concept, two simple 'quality gates' are enabled for illustrative purposes. (1) Writing style: the measurements of distance, temperature, volume, size, weight, etc, must always be described with numerals (as suggested by Microsoft's style guidelines). (2) The hardware descriptions embedded in the document must explicitly define the endianness of the registers. For the latter, you will use a preliminary version of an Asciidoc extension that allow technical writers to embed hardware specifications using SystemRDL, which will be automatically transformed into human-readable content and base software artifacts (e.g., C headers). It is not necessary to have to previous knowledge on this language, as the exercise will guide you on how to modify it. 
+The concept of 'quality gate' refers to the acceptance criteria a project must meet before proceeding to the follow-up delivery phases. In software, automatically verifiable criteria are integrated into the CI/CD environment for this purpose. The proposed documentation approach would enforce two main criteria, related to the issues previously discussed: writing quality/clarity, and completeness of the technical details provided. In this proof of concept, two simple 'quality gates' are enabled for illustrative purposes. (1) Writing style: the measurements of distance, temperature, volume, size, weight, etc, must always be described with numerals (as suggested by Microsoft's style guidelines). (2) The hardware descriptions embedded in the document must explicitly define the endianness of the registers. For the latter, you will use a preliminary version of an Asciidoc extension that allows technical writers to embed hardware specifications using SystemRDL, which will be automatically transformed into human-readable content and base software artifacts (e.g., C headers). It is not necessary to have previous knowledge on this language, as the exercise will guide you on how to modify it. 
 
 Steps:
 
-1. Add a SystemRDL model to your first document using the [systemrdl] macro. The following code snippet shows how to define a simple registry map within the document (larger models could be imported from external files).  In a nutshell, this model describes a register map (REG1) with two fields (f1 and f2) of 8 and 16 bits respectively, and a default value of 256 for the former. Note that the dashes (----) are not part of SystemRDL defintion, but the way Asciidoc defines the beginning and the end of the inline-[systemrdl] macro. Pretend that you overlooked the inconsistency of storing 256 in a 8-bit field, and copy the definition as-is in the first document created on the previous scenario. *Note: if you are working with AsciidoctorFX, or any other editor, it won't render -locally- many of the commands used in this guide (including the [systemrdl] one), as they are custom-made ones. By now you need to build the document within the CI/CD pipeline to have  a full-rendered version of it (a fully fledged local editing environment is a work in progress).
+1. Add a SystemRDL model to your first document using the [systemrdl] macro. The following code snippet shows how to define a simple registry map within the document (larger models could be imported from external files).  In a nutshell, this model describes a register map (REG1) with two fields (f1 and f2) of 8 and 16 bits respectively, and a default value of 256 for the former. Note that the dashes (----) are not part of SystemRDL definition, but the way Asciidoc defines the beginning and the end of the inline-[systemrdl] macro. Pretend that you overlooked the inconsistency of storing 256 in an 8-bit field, and copy the definition as-is in the first document created on the previous scenario. *Note: if you are working with AsciidoctorFX, or any other editor, it won't render -locally- many of the commands used in this guide (including the [systemrdl] one), as they are custom-made ones. By now you need to build the document within the CI/CD pipeline to have  a full-rendered version of it (a fully fledged local editing environment is a work in progress).
 
 
 ```
@@ -105,7 +105,7 @@ addrmap tiny {
 -----
 ```
 
-2. In the system overview section of the ICD, add a sentence that includes the value of a unit of measure (weight, longitude, etc) spelled out, e.g.: ' It is expected a resolution of ten megapixels ' . Commit these two changes, create a new version tag, and push it on the repository. This version has one error -the inconsistency of on the default value of the registry field- and two conflicts with quality gates, as the registry map doesn't define the endianness, and there are violations to a (hypothetical) writing style guideline. Open the [management dashboard](https://documentation-dashboard.herokuapp.com/) and check the new status of the document, and the information provided by the 'failed ICD builds' section on it.
+2. In the system overview section of the ICD, add a sentence that includes the value of a unit of measure (weight, longitude, etc) spelled out, e.g.: ' It is expected a resolution of ten megapixels ' . Commit these two changes, create a new version tag, and push it on the repository. This version has one error -the inconsistency of the default value of the registry field- and two conflicts with quality gates, as the registry map doesn't define the endianness, and there are violations of a (hypothetical) writing style guideline. Open the [management dashboard](https://documentation-dashboard.herokuapp.com/) and check the new status of the document, and the information provided by the 'failed ICD builds' section on it.
 
 ![](errors-check.gif)
 
@@ -119,7 +119,7 @@ addrmap tiny {
             ...
 ```
 
-5. Before commiting the changes, add an acronym into the document to test the centralized glossaries management feature, and how it can automatically generate a glossay in the document (acronyms/abrreviations management features would be available in future versions). This only requires to add the 'acr' macro (acr:<acronym>[context=<context>]) in the document, but alternatively you can also search for terms and copy such a macro through the documentation management plaform. To do so, in the [management dashboard](https://documentation-dashboard.herokuapp.com/) go to the Glossary section and search for an acronym (e.g., KSP). From there, copy the macro required to insert acronyms definitions in the document. Write a sentence that includes the acronym and use the macro within it accordingly. 
+5. Before committing the changes, add an acronym into the document to test the centralized glossaries management feature, and how it can automatically generate a glossary in the document (acronyms/abbreviations management features would be available in future versions). This only requires adding the 'acr' macro (acr:<acronym>[context=<context>]) in the document, but alternatively you can also search for terms and copy such a macro through the documentation management platform. To do so, in the [management dashboard](https://documentation-dashboard.herokuapp.com/) go to the Glossary section and search for an acronym (e.g., KSP). From there, copy the macro required to insert acronyms definitions in the document. Write a sentence that includes the acronym and use the macro within it accordingly. 
 
 ![](copy-glossary-ref.gif)
 
@@ -129,7 +129,7 @@ addrmap tiny {
 
 ![](copy-header-url.gif)
 
-8. If you can download both documents (e.g., with the wget or curl commands), you have succesfully completed this second scenario. 
+8. If you can download both documents (e.g., with the wget or curl commands), you have successfully completed this second scenario. 
   
 
 ### Scenario three - ICDs as the single source of truth, centralized versions/dependencies tracking.
@@ -137,13 +137,13 @@ addrmap tiny {
 
 This scenario illustrates how the ICDs, by becoming the actual 'single source of truth' for interfacing-related activities, could be used to foresee potential issues as interfaces evolve over time. In particular, it shows how, by keeping track of the documents' lifecycle and dependencies between them, it could detect and notify when an ICD might require a revision (e.g., when one of the ICDs referenced by it has been updated), or when a software artifact derived form it (by means of code generation) is outdated. 
 
-In this scenario you will assume the role of a developer, who will work with a code base that will use the specifications given by the ICDs (the one with the register map definitions, from now on referred to as document A).   
+In this scenario you will assume the role of a developer, who will work with a codebase that will use the specifications given by the ICDs (the one with the register map definitions, from now on referred to as document A).   
 
 1. Clone the C/CMake codebase from [this repository](https://gitlab.com/hcadavid/icd-aware-build-script) in a local directory (a different one from the one where the sources of the documents are). This codebase depends on the headers generated by the ICD, so go to the document and use the button below the register map (Copy header's file location) to copy the URL where the header corresponding to such register map is located. Use wget or curl to download the header in the directory of the codebase (according to the previous steps, it should be called 'turboencarbulator.h'.
 
 ![](copy-header-url.gif)
 
-2. Edit the CMakeList.txt file. As you can see, this script (besides building the make file), checks a SHA-256-checksum of the header agains an online checksum (the one of the most recent available online). To make the versioning self-checking work, you just need to set the value of the variable TURBOENCARBULATOR_LATEST_CHECKSUM accordingly. You can copy the URL of the most recent header's checksum with the other button below the registers map (Copy header's checksum file location).
+2. Edit the CMakeList.txt file. As you can see, this script (besides building the make file), checks a SHA-256-checksum of the header against an online checksum (the one of the most recent available online). To make the versioning self-checking work, you just need to set the value of the variable TURBOENCARBULATOR_LATEST_CHECKSUM accordingly. You can copy the URL of the most recent header's checksum with the other button below the registers map (Copy header's checksum file location).
 
 
 ```
@@ -181,7 +181,7 @@ $ ./app
 
 
 
-***Thank you for your participation in this exercise!*** This exercise presented a working proof of concept that resulted from the first cycle of an action resarch study. Your feedback is really important to improve/adjust the overall  documentation management approach and its related artifacts (before turning them into proper open source software projects) for the following cycle of the study. Given this, we would really appreciate it if you could fill out [this survey](https://rug.eu.qualtrics.com/jfe/form/SV_8okI7KLnEEWkaiy). Thank you again for your time and consideration.
+***Thank you for your participation in this exercise!*** This exercise presented a working proof of concept that resulted from the first cycle of an action research study. Your feedback is really important to improve/adjust the overall  documentation management approach and its related artifacts (before turning them into proper open source software projects) for the following cycle of the study. Given this, we would really appreciate it if you could fill out [this survey](https://rug.eu.qualtrics.com/jfe/form/SV_8okI7KLnEEWkaiy). Thank you again for your time and consideration.
 
 
 
