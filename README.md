@@ -105,7 +105,7 @@ addrmap tiny {
 -----
 ```
 
-2. In the same document, add a sentence with the value of a unit of measure spelled (e.g., 'ten centimeters'). Commit these two changes, create a new version tag, and push it on the repository. This version has one error -the inconsistency of on the default value of the registry field- and two conflicts with quality gates, as the registry map doesn't define the endianness, and there are violations to a (hypothetical) writing style guideline. Open the [management dashboard](https://documentation-dashboard.herokuapp.com/) and check the new status of the document, and the information provided by the 'failed ICD builds' section on it.
+2. In the system overview section of the ICD, add a sentence that includes the value of a unit of measure (weight, longitude, etc) spelled out, e.g.: ' It is expected a resolution of ten megapixels ' . Commit these two changes, create a new version tag, and push it on the repository. This version has one error -the inconsistency of on the default value of the registry field- and two conflicts with quality gates, as the registry map doesn't define the endianness, and there are violations to a (hypothetical) writing style guideline. Open the [management dashboard](https://documentation-dashboard.herokuapp.com/) and check the new status of the document, and the information provided by the 'failed ICD builds' section on it.
 
 ![](errors-check.gif)
 
