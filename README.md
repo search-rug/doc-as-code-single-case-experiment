@@ -1,6 +1,6 @@
 # Document-as-code in the context of Interface-Control documents
 
-A number of empirical studies suggest that serious integration and operational problems in large-scale systems/systems-of-systems are often linked to Interface Control Documents (ICDs) management. These empirical studies suggest that interfaces are in many cases incomplete or unclearly defined, especially between hardware and software subsystems, that, together with the domain knowledge gap between the owners and the users of the interface, often lead to misunderstandings or potentially false assumptions. Furthermore, the development of the software artifacts derived from them (e.g., simulations, tests) are error-prone because the ICDs, by being human-readable-only, require manual transcription. This also creates a problem of redundant specifications scattered across multiple artifacts ---both the human-readable document and the artifacts derived from them--- and hence the risk of having them out-of-sync with each other. 
+A number of empirical studies suggest that serious integration and operational problems in large-scale systems/systems-of-systems are often linked to Interface Control Documents (ICDs) management. These empirical studies suggest that interfaces are in many cases incomplete or unclearly defined, especially between hardware and software subsystems, which, together with the domain knowledge gap between the owners and the users of the interface, often lead to misunderstandings or potentially false assumptions. Furthermore, the development of the software artifacts derived from them (e.g., simulations, tests) are error-prone because the ICDs, by being human-readable-only, require manual transcription. This also creates a problem of redundant specifications scattered across multiple artifacts ---both the human-readable document and the artifacts derived from them--- and hence the risk of having them out-of-sync with each other. 
 
 With this motivation, an action research study is being carried on in the context of LOFAR, with the goal of identifying and evaluating alternative ICD management approaches that could improve the aforementioned issues.
 
@@ -37,9 +37,9 @@ In the following exercise, you will perform a test-drive, in a set of scenarios,
 
 ### Scenario one - Document versioning and basic ICDs publication/tracking
 
-Note: You can do this exercise online, using GitLab's web editor, or locally, installing and editor like [AsciidoctorFX](https://asciidocfx.com/) and using your local git client.
+Note: You can do this exercise online, using GitLab's web editor, or locally, installing an editor like [AsciidoctorFX](https://asciidocfx.com/) and using your local git client.
 
-In the proposed documentation management approach, each ICD is written in a markup language and maintained on its own Git repository. In this exercise, you will test-drive two artifacts: (1) a docker container that builds and test (against the predefined 'quality gates') these documents within a CI/CD pipeline, and (2) a document-centered platform that keeps track of the status of the overall documentation.
+In the proposed documentation management approach, each ICD is written in a markup language and maintained on its own Git repository. In this exercise, you will test-drive two artifacts: (1) a docker container that builds and tests (against the predefined 'quality gates') these documents within a CI/CD pipeline, and (2) a document-centered platform that keeps track of the status of the overall documentation.
 
 Steps:
 
@@ -51,7 +51,7 @@ Steps:
 
 ![](add_variable.gif)
 
-2. Add some content to the document A by cloning it in your computer and adding some content to them (so you can tell one from the other) using a local Asciidoc editor like [AsciidoctorFX](https://asciidocfx.com/), and committing/pushing the changes to the repository afterward. Alternatively, you can do the above using Gitlab's web editor.
+2. Add some content to the document A by cloning it on your computer and adding some content to them (so you can tell one from the other) using a local Asciidoc editor like [AsciidoctorFX](https://asciidocfx.com/), and committing/pushing the changes to the repository afterward. Alternatively, you can do the above using Gitlab's web editor.
 
 3. Once you have committed and pushed the above changes, a CI/CD job should be launched on document A's repo. The compiled version of the document should be now be available in gitlab pages at <your_user_name>.gitlab.io/<repo_name>/stage. This 'staging' version of the document, which won't be considered as an official one, would be useful for reviews before posting an actual version of the document.
 
